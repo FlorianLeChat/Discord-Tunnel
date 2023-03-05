@@ -1,12 +1,13 @@
-const { response } = require( "express" );
+const path = require( "path" );
+const cors = require( "cors" );
 const express = require( "express" );
-const app = express();
 
-app.use( ( _request, response, next ) =>
-{
-	response.header( "Access-Control-Allow-Origin", "*" );
-	next();
-} );
+const app = express();
+const root = path.resolve( `${ __dirname }/../ui/build` );
+
+app.use( cors( { origin: "http://localhost:3000" } ) );
+app.use( express.json() );
+app.use( express.static( root ) );
 
 app.get( "/discord", ( _request, response ) =>
 {
@@ -43,6 +44,11 @@ app.get( "/discord", ( _request, response ) =>
 		{
 			return response.sendStatus( 500 );
 		} );
+} );
+
+app.all( "*", ( _request, response ) =>
+{
+	response.sendFile( `${ root }/index.html` );
 } );
 
 app.listen( 3001 );
