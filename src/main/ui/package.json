@@ -1,7 +1,7 @@
 {
   "main": "index.js",
   "name": "discord-tunnel",
-  "proxy": "http://localhost:8080",
+  "proxy": "http://localhost:3001",
   "author": "Florian Trayon (https://github.com/FlorianLeChat)",
   "license": "MIT",
   "private": true,
