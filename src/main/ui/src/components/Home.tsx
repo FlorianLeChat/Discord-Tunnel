@@ -8,7 +8,7 @@ export default function Home()
 {
 	// Déclaration des variables.
 	const [ code, setCode ] = useState( 0 );
-	let timer: NodeJS.Timer;
+	const [ timer, setTimer ] = useState<NodeJS.Timer>();
 
 	// Permet d'envoyer une requête à l'API de Discord pour simuler l'écriture d'un message.
 	const runApiRequest = () =>
@@ -22,7 +22,7 @@ export default function Home()
 	// Permet de démarrer l'envoi de requêtes à l'API de Discord.
 	const startSimulation = () =>
 	{
-		timer = setInterval( runApiRequest, 5000 );
+		setTimer( setInterval( runApiRequest, 5000 ) );
 
 		alert( "Simulation démarrée." );
 	};
