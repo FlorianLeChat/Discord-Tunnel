@@ -9,11 +9,17 @@ export default function Home()
 	// Déclaration des variables.
 	const [ code, setCode ] = useState( 0 );
 	const [ timer, setTimer ] = useState<NodeJS.Timer>();
+	const [ password, setPassword ] = useState( "" );
+
+	const updatePassword = ( event: React.ChangeEvent<HTMLInputElement> ) =>
+	{
+		setPassword( event.target.value );
+	};
 
 	// Permet d'envoyer une requête à l'API de Discord pour simuler l'écriture d'un message.
 	const runApiRequest = () =>
 	{
-		fetch( window.location.pathname + "api/typing" )
+		fetch( window.location.pathname + "api/typing?secret=" + password )
 			.then( response => setCode( response.status ) );
 
 		console.log( "runApiRequest" );
@@ -44,6 +50,8 @@ export default function Home()
 			<button onClick={startSimulation}>Appuyez ici pour simuler l'écriture</button>
 
 			<button onClick={stopSimulation}>Appuyez ici pour arrêter la simulation</button>
+
+			<input type="text" value={password} onChange={updatePassword} />
 
 			Dernier code HTTP : {code}
 		</section>

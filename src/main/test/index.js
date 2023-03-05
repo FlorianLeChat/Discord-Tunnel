@@ -9,8 +9,11 @@ app.use( cors( { origin: "http://localhost:3000" } ) );
 app.use( express.json() );
 app.use( express.static( root ) );
 
-app.get( "/api/typing", ( _request, response ) =>
+app.get( "/api/typing", ( request, response ) =>
 {
+	if ( request.query.secret !== "laurine" )
+		return response.sendStatus( 401 );
+
 	console.log( "Discord" );
 
 	fetch( "https://discord.com/api/v9/channels/771427562484138025/typing", {
