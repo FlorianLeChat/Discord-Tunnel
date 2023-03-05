@@ -13,7 +13,7 @@ export default function Home()
 	// Permet d'envoyer une requête à l'API de Discord pour simuler l'écriture d'un message.
 	const runApiRequest = () =>
 	{
-		fetch( "discord" )
+		fetch( window.location.pathname + "discord" )
 			.then( response => setCode( response.status ) );
 
 		console.log( "runApiRequest" );
@@ -41,9 +41,9 @@ export default function Home()
 	// Affichage du rendu HTML du composant.
 	return (
 		<section id="Home">
-			<button onClick={startSimulation}>Appuyez ici pour simuler l'écriture.</button>
+			<button onClick={startSimulation}>Appuyez ici pour simuler l'écriture</button>
 
-			<button onClick={stopSimulation}>Appuyez ici pour arrêter la simulation.</button>
+			<button onClick={stopSimulation}>Appuyez ici pour arrêter la simulation</button>
 
 			Dernier code HTTP : {code}
 		</section>
