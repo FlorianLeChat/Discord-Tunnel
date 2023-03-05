@@ -1,18 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
-
+// Importation de la feuille de style CSS.
 import "./index.css";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>,
-	document.getElementById( "root" )
+// Importation de React et de ses dépendances.
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+
+// Génération de la page.
+const root = createRoot( document.querySelector( "body > main" ) );
+root.render(
+	<StrictMode>
+		<h1>Ceci est un test</h1>
+	</StrictMode>
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
