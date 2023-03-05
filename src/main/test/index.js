@@ -9,7 +9,7 @@ app.use( cors( { origin: "http://localhost:3000" } ) );
 app.use( express.json() );
 app.use( express.static( root ) );
 
-app.get( "/discord", ( _request, response ) =>
+app.get( "/api/typing", ( _request, response ) =>
 {
 	console.log( "Discord" );
 
