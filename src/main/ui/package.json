@@ -1,16 +1,30 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
+  "main": "index.js",
+  "name": "discord-tunnel",
+  "proxy": "http://localhost:8080",
+  "author": "Florian Trayon (https://github.com/FlorianLeChat)",
+  "license": "MIT",
   "private": true,
+  "version": "1.0.0",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FlorianLeChat/Discord-Tunnel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FlorianLeChat/Discord-Tunnel/issues"
+  },
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "bootstrap": "^4.5.0",
-    "react": "^16.13.1",
-    "react-bootstrap": "^1.0.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react": "~18.2",
+    "react-dom": "~18.2",
+    "react-scripts": "~5.0"
+  },
+  "engines": {
+    "node": ">=19.6",
+    "npm": ">=9.4"
+  },
+  "overrides": {
+    "nth-check": ">=2.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -18,20 +32,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:8080",
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "browserslist": [
+    "defaults"
+  ]
 }
