@@ -1,4 +1,4 @@
-package com.florianlechat.discordtunnel.controller;
+package com.florianlechat.discordtunnel.controllers;
 
 import java.net.URL;
 import java.io.IOException;
