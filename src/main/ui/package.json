@@ -1,12 +1,10 @@
 {
-  "main": "index.js",
   "name": "discord-tunnel",
   "proxy": "http://localhost:8080",
   "author": "Florian Trayon (https://github.com/FlorianLeChat)",
   "license": "MIT",
   "private": true,
   "version": "1.0.0",
-  "homepage": "",
   "repository": {
     "type": "git",
     "url": "https://github.com/FlorianLeChat/Discord-Tunnel.git"
@@ -15,28 +13,23 @@
     "url": "https://github.com/FlorianLeChat/Discord-Tunnel/issues"
   },
   "dependencies": {
-    "react": "~18.2",
-    "react-dom": "~18.2"
+    "next": "~13.2",
+    "react": "~18.2"
   },
   "devDependencies": {
+    "@types/node": "~18.14",
     "@types/react": "~18.0",
-    "@types/react-dom": "~18.0",
     "sass": "~1.58",
-    "typescript": "~4.9",
-    "react-scripts": "~5.0"
+    "typescript": "~4.9"
   },
   "engines": {
     "node": ">=19.6",
     "npm": ">=9.4"
   },
-  "overrides": {
-    "nth-check": ">=2.0.1"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "browserslist": [
     "defaults"

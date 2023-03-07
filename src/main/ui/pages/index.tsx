@@ -1,8 +1,7 @@
 //
-// Composant de la page d'accueil du site.
+// Route vers la page d'accueil du site.
 //
 import { useState } from "react";
-import "./Home.scss";
 
 export default function Home()
 {
@@ -44,9 +43,9 @@ export default function Home()
 		}
 	};
 
-	// Affichage du rendu HTML du composant.
+	// Affichage du rendu HTML de la page.
 	return (
-		<section id="Home">
+		<section>
 			<button onClick={startSimulation}>Appuyez ici pour simuler l'écriture</button>
 
 			<button onClick={stopSimulation}>Appuyez ici pour arrêter la simulation</button>
