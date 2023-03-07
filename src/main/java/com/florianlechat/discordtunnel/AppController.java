@@ -1,20 +1,16 @@
 package com.florianlechat.discordtunnel;
 
 import java.io.IOException;
-import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class AppController
 {
-	// Permet de rediriger l'ensemble des requêtes vers
-	//	le serveur NextJS utilisé pour servir le front-end.
-	@RequestMapping({"/"})
-	public String index(HttpServletResponse response) throws IOException
+	// Permet de servir le contenu statique du site.
+	@RequestMapping("/")
+	public String index() throws IOException
 	{
-		response.sendRedirect("http://localhost:3000");
-
-		return "Redirecting to http://localhost:3000";
+		return "index.html";
 	}
 }
