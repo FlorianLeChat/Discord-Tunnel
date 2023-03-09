@@ -24,6 +24,15 @@ export default function DiscordTunnel( { Component, pageProps }: AppProps )
 
 				{/* Titre du document */}
 				<title>Discord Tunnel</title>
+
+				{/* Icônes du document */}
+				<link rel="icon" type="image/webp" sizes="16x16" href="assets/favicons/16x16.webp" />
+				<link rel="icon" type="image/webp" sizes="32x32" href="assets/favicons/32x32.webp" />
+				<link rel="icon" type="image/webp" sizes="48x48" href="assets/favicons/48x48.webp" />
+				<link rel="icon" type="image/webp" sizes="192x192" href="assets/favicons/192x192.webp" />
+				<link rel="icon" type="image/webp" sizes="512x512" href="assets/favicons/512x512.webp" />
+
+				<link rel="apple-touch-icon" href="assets/favicons/180x180.webp" />
 			</Head>
 
 			{/* Affichage du composant demandé */}
