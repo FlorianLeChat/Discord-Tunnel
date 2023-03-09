@@ -26,10 +26,29 @@ public class DiscordController
 		}
 
 		// On effectue ensuite la requête HTTP.
-		URL url = new URL("https://www.google.com");
+		URL url = new URL("https://discord.com/api/v9/channels/771427562484138025/typing");
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-		connection.setRequestMethod("GET");
+		connection.setRequestMethod("POST");
+
+		connection.setRequestProperty("accept", "*/*");
+		connection.setRequestProperty("accept-language", "fr,fr-FR;q=0.9,en-US;q=0.8");
+		connection.setRequestProperty("authorization", "MTgzMjcyNDExMTY3MzI2MjA5.Gbllme.mppZHM4ZllEWVg1cWgzTzEyU1hTeFZNNXZkQTF2VURBZGQ5ZTljNzV3YzRKMWhXaHd3NFNzZUpRcTJuajYtR3BLNlVueFd1a2JQYWRvT0d2");
+		connection.setRequestProperty("sec-fetch-dest", "empty");
+		connection.setRequestProperty("sec-fetch-mode", "cors");
+		connection.setRequestProperty("sec-fetch-site", "same-origin");
+		connection.setRequestProperty("x-debug-options", "bugReporterEnabled");
+		connection.setRequestProperty("x-discord-locale", "fr");
+		connection.setRequestProperty("x-super-properties", "eyJvcyI6IldpbmRvd3MiLCJicm93c2VyIjoiRGlzY29yZCBDbGllbnQiLCJyZWxlYXNlX2NoYW5uZWwiOiJzdGFibGUiLCJjbGllbnRfdmVyc2lvbiI6IjEuMC45MDExIiwib3NfdmVyc2lvbiI6IjEwLjAuMTkwNDUiLCJvc19hcmNoIjoieDY0Iiwic3lzdGVtX2xvY2FsZSI6ImZyIiwiY2xpZW50X2J1aWxkX251bWJlciI6MTc4NTkwLCJuYXRpdmVfYnVpbGRfbnVtYmVyIjoyOTU4NCwiY2xpZW50X2V2ZW50X3NvdXJjZSI6bnVsbCwiZGVzaWduX2lkIjowfQ==");
+		connection.setRequestProperty("referrer", "https://discord.com/channels/401777889449607178/771427562484138025");
+		connection.setRequestProperty("referrerPolicy", "strict-origin-when-cross-origin");
+		connection.setRequestProperty("Credentials", "include");
+		connection.setRequestProperty("Content-Length", "0");
+
+		connection.setDoInput(true);
+		connection.setDoOutput(true);
+
+		connection.connect();
 
 		// On retourne enfin le résultat de la requête.
 		return ResponseEntity.status(connection.getResponseCode()).build();
