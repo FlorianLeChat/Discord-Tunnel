@@ -4,7 +4,7 @@
 //
 
 // Importation de la feuille de style CSS globale.
-import "./index.scss";
+import "./index.css";
 
 // Importation des dépendances.
 import Head from "next/head";
