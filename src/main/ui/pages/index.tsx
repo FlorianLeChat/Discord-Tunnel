@@ -49,13 +49,10 @@ export default function Home()
 	// Permet d'envoyer un message au travers de l'API de Discord.
 	const sendMessage = () =>
 	{
-		setTimer( setInterval( () =>
-		{
-			fetch( window.location.pathname + "api/message?secret=" + password + "&message=" + message )
-				.then( response => setCode( response.status ) );
+		fetch( window.location.pathname + "api/message?secret=" + password + "&message=" + message )
+			.then( response => setCode( response.status ) );
 
-			console.log( "Requête de simulation de messages envoyée." );
-		}, 5000 ) );
+		console.log( "Requête de simulation de messages envoyée." );
 	};
 
 	// Affichage du rendu HTML de la page.
