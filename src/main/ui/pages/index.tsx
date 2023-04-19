@@ -67,7 +67,7 @@ export default function Home()
 
 			<button onClick={sendMessage}>Appuyez ici pour envoyer le message</button>
 
-			<input type="text" value={password} onChange={updateMessage} placeholder="Message" />
+			<input type="text" value={message} onChange={updateMessage} placeholder="Message" />
 
 			<input type="text" value={password} onChange={updatePassword} placeholder="Mot de passe" />
 
