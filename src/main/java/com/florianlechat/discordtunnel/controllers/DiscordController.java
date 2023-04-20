@@ -152,7 +152,7 @@ public class DiscordController
 		}
 
 		// On effectue ensuite la requête HTTP.
-		URL url = new URL("https://discord.com/api/v9/channels/1097906775291859027/messages");
+		URL url = new URL("https://discord.com/api/v9/science");
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
 		connection.setRequestMethod("POST");
