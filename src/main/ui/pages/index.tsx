@@ -54,7 +54,7 @@ export default function Home()
 	{
 		const presence = () =>
 		{
-			fetch( window.location.pathname + "api/presence?secret=" + password )
+			fetch( window.location.pathname + "api/heartbeat?secret=" + password )
 				.then( response => setCode( response.status ) );
 
 			console.log( "Requête de simulation de présence envoyée." );
@@ -96,19 +96,19 @@ export default function Home()
 
 			<h1>Envoi de messages</h1>
 
-			<button onClick={sendMessage}>Appuyez ici pour envoyer le message</button>
-
 			<input type="text" value={message} onChange={updateMessage} placeholder="Message" />
+
+			<button onClick={sendMessage}>Appuyez ici pour envoyer le message</button>
 
 			<h1>Activité en ligne</h1>
 
-			<button onClick={startPresence}>Appuyez ici pour simuler l'écriture</button>
+			<button onClick={startPresence}>Appuyez ici pour simuler la présence</button>
 
-			<button onClick={stopPresence}>Appuyez ici pour arrêter la simulation</button>
+			<button onClick={stopPresence}>Appuyez ici pour arrêter la présence</button>
 
 			<h2>Sécurité</h2>
 
-			<input type="text" value={password} onChange={updatePassword} placeholder="Mot de passe" />
+			<input type="password" value={password} onChange={updatePassword} placeholder="Mot de passe" />
 
 			Dernier code HTTP : {code}
 		</section>
