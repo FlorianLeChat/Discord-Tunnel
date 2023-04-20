@@ -7,9 +7,9 @@ export default function Home()
 {
 	// Déclaration des variables.
 	const [ code, setCode ] = useState( 0 );
-	const [ timer, setTimer ] = useState<NodeJS.Timer>();
 	const [ message, setMessage ] = useState( "" );
 	const [ password, setPassword ] = useState( "" );
+	const [ typingTimer, setTypingTimer ] = useState<NodeJS.Timer>();
 
 	const updatePassword = ( event: React.ChangeEvent<HTMLInputElement> ) =>
 	{
@@ -21,28 +21,30 @@ export default function Home()
 		setMessage( event.target.value );
 	};
 
-	// Permet de démarrer l'envoi de requêtes à l'API de Discord.
-	const startSimulation = () =>
+	// Permet de démarrer la simulation d'écriture.
+	const startTyping = () =>
 	{
-		setTimer( setInterval( () =>
+		const typing = () =>
 		{
 			fetch( window.location.pathname + "api/typing?secret=" + password )
 				.then( response => setCode( response.status ) );
 
 			console.log( "Requête de simulation d'écriture envoyée." );
-		}, 5000 ) );
+		};
 
-		alert( "Simulation démarrée." );
+		typing();
+
+		setTypingTimer( setInterval( typing, 10000 ) );
 	};
 
-	// Permet d'arrêter l'envoi de requêtes à l'API de Discord.
-	const stopSimulation = () =>
+	// Permet d'arrêter la simulation d'écriture.
+	const stopTyping = () =>
 	{
-		if ( timer )
+		if ( typingTimer )
 		{
-			clearInterval( timer );
+			clearInterval( typingTimer );
 
-			alert( "Simulation arrêtée." );
+			console.log( "Requête de simulation d'écriture arrêtée." );
 		}
 	};
 
@@ -58,13 +60,19 @@ export default function Home()
 	// Affichage du rendu HTML de la page.
 	return (
 		<section>
-			<button onClick={startSimulation}>Appuyez ici pour simuler l'écriture</button>
+			<h1>État d'écriture</h1>
 
-			<button onClick={stopSimulation}>Appuyez ici pour arrêter la simulation</button>
+			<button onClick={startTyping}>Appuyez ici pour simuler l'écriture</button>
+
+			<button onClick={stopTyping}>Appuyez ici pour arrêter la simulation</button>
+
+			<h1>Envoi de messages</h1>
 
 			<button onClick={sendMessage}>Appuyez ici pour envoyer le message</button>
 
 			<input type="text" value={message} onChange={updateMessage} placeholder="Message" />
+
+			<h2>Sécurité</h2>
 
 			<input type="text" value={password} onChange={updatePassword} placeholder="Mot de passe" />
 
