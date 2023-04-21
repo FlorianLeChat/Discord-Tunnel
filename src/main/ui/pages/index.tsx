@@ -82,6 +82,8 @@ export default function Home()
 		fetch( window.location.pathname + "api/message?secret=" + password + "&message=" + message )
 			.then( response => setCode( response.status ) );
 
+		setMessage( "" );
+
 		console.log( "Requête de simulation de messages envoyée." );
 	};
 
