@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AppController
 {
 	// Permet de servir le contenu statique du site.
-	@RequestMapping("/")
+	@RequestMapping("")
 	public String index() throws IOException
 	{
 		return "index.html";
