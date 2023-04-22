@@ -85,6 +85,7 @@ public class DiscordGateway
 	}
 
 	// Permet de recevoir les messages en provenance du WebSocket.
+	//  Source : https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
 	@OnMessage
 	public void onWebSocketText(String message)
 	{
@@ -161,6 +162,14 @@ public class DiscordGateway
 			send(heartbeatJson.toString());
 
 			System.out.println("Envoi d'un message de maintien de connexion instantané : " + message);
+		}
+		// On force la reconnexion si le code d'opération est 9.
+		else if (messageJson.getInt("op") == 9)
+		{
+			System.out.println("Le WebSocket de Discord a demandé une reconnexion.");
+
+			this.close();
+			this.connect(this.token);
 		}
 		// On réceptionne enfin les messages d'acquittement
 		//  du message de maintien de connexion.
