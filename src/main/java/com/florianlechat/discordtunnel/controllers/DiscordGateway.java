@@ -74,12 +74,12 @@ public class DiscordGateway
 		JSONObject identifyJson = new JSONObject()
 			.put("op", 2) // Code de l'opération d'identification.
 			.put("d", new JSONObject()
-					.put("token", this.token) // Jeton d'accès de l'utilisateur.
-					.put("intents", 0) // Souscription aux événements.
-					.put("properties", new JSONObject() // Informations sur le client.
-							.put("$os", "linux")
-							.put("$browser", "Discord-Tunnel")
-							.put("$device", "Discord-Tunnel")));
+				.put("token", this.token) // Jeton d'accès de l'utilisateur.
+				.put("intents", 0) // Souscription aux événements.
+				.put("properties", new JSONObject() // Informations sur le client.
+					.put("$os", "linux")
+					.put("$browser", "Discord-Tunnel")
+					.put("$device", "Discord-Tunnel")));
 
 		send(identifyJson.toString());
 	}
@@ -112,6 +112,13 @@ public class DiscordGateway
 						e.printStackTrace();
 					}
 
+					// On vérifie par la même occasion si la connexion
+					//  est toujours ouverte.
+					if (session == null || !this.session.isOpen())
+					{
+						return;
+					}
+
 					// On vérifie ensuite si le WebSocket de Discord a répondu
 					//  au dernier message de maintien de connexion.
 					if (!this.receivedAck)
@@ -119,7 +126,7 @@ public class DiscordGateway
 						// Si ce n'est pas le cas, on ferme la connexion
 						//  et on en ouvre une nouvelle.
 						System.out.println("Le WebSocket de Discord n'a pas répondu au message de maintien de connexion.");
-						System.out.println("Reconnexion du WebSocket de Discord.");
+						System.out.println("Reconnexion du WebSocket de Discord...");
 
 						close();
 						connect(this.token);

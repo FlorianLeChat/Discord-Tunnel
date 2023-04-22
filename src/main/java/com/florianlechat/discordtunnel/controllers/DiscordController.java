@@ -174,7 +174,7 @@ public class DiscordController
 		}
 
 		// On effectue alors la liaison aux WebSockets de Discord.
-		if (state.equals("true"))
+		if (state.equals("1"))
 		{
 			gateway.connect("MTA5NzkwNTA4ODAxOTg0NTI2MA.GJIDh4.-C6QaRjfJ0yigjAAuC1XCdM9ThmcESjhbOr358");
 		}
