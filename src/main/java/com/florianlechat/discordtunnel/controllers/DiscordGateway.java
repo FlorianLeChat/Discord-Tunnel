@@ -3,6 +3,7 @@ package com.florianlechat.discordtunnel.controllers;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -72,14 +73,35 @@ public class DiscordGateway
 		System.out.println("Connexion au WebSocket de Discord réussie.");
 
 		JSONObject identifyJson = new JSONObject()
-			.put("op", 2) // Code de l'opération d'identification.
+			// Code de l'opération d'identification.
+			.put("op", 2)
+
+			// Données de l'opération d'identification.
 			.put("d", new JSONObject()
-				.put("token", this.token) // Jeton d'accès de l'utilisateur.
-				.put("intents", 0) // Souscription aux événements.
-				.put("properties", new JSONObject() // Informations sur le client.
-					.put("$os", "linux")
-					.put("$browser", "Discord-Tunnel")
-					.put("$device", "Discord-Tunnel")));
+				// Jeton d'accès de l'utilisateur.
+				.put("token", this.token)
+				// Souscription aux événements.
+				.put("intents", 0)
+
+				// Informations de présence.
+				.put("presence", new JSONObject()
+					.put("afk", false)
+					.put("status", "idle")
+					.put("activities", new JSONArray()
+						.put(new JSONObject()
+							.put("name", "私は愛に生まれた")
+							.put("type", 0)
+						)
+					)
+				)
+
+				// Informations sur le client.
+				.put("properties", new JSONObject()
+					.put("os", "linux")
+					.put("device", "Discord-Tunnel")
+					.put("browser", "Discord-Tunnel")
+				)
+			);
 
 		send(identifyJson.toString());
 	}
