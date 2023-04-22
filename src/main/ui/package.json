@@ -27,7 +27,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build && cd ../../.. && mvnw clean install",
+    "build": "next build && cd ../../.. && ./mvnw clean install",
     "export": "next export -o ../resources/static",
     "start": "pm2 start --name discord-tunnel java -- -jar ../../../target/discord-tunnel-1.0.0.jar",
     "stop": "pm2 delete discord-tunnel",
