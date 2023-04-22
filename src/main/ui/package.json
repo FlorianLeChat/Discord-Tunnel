@@ -18,6 +18,7 @@
   "devDependencies": {
     "@types/node": "~18.15",
     "@types/react": "~18.0",
+    "pm2": "~5.3",
     "typescript": "~5.0"
   },
   "engines": {
@@ -27,6 +28,10 @@
   "scripts": {
     "dev": "next dev",
     "export": "next build && next export -o ../resources/static"
+    "start": "pm2 start --name discord-tunnel java -- -jar ../../../target/discord-tunnel-1.0.0.jar",
+    "stop": "pm2 delete discord-tunnel",
+    "restart": "pm2 restart discord-tunnel --update-env",
+    "reload": "pm2 reload discord-tunnel"
   },
   "browserslist": [
     "defaults"
