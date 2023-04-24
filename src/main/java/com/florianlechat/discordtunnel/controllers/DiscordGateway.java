@@ -185,8 +185,8 @@ public class DiscordGateway
 
 			System.out.println("Envoi d'un message de maintien de connexion instantané : " + message);
 		}
-		// On force la reconnexion si le code d'opération est 9.
-		else if (messageJson.getInt("op") == 9)
+		// On force la reconnexion si le code d'opération est 7 ou 9.
+		else if (messageJson.getInt("op") == 7 || messageJson.getInt("op") == 9)
 		{
 			System.out.println("Le WebSocket de Discord a demandé une reconnexion.");
 
