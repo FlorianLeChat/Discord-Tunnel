@@ -7,18 +7,27 @@ export default function Home()
 {
 	// Déclaration des variables.
 	const [ code, setCode ] = useState( 0 );
+	const [ delay, setDelay ] = useState( 0 );
 	const [ message, setMessage ] = useState( "" );
 	const [ password, setPassword ] = useState( "" );
 	const [ typingTimer, setTypingTimer ] = useState<NodeJS.Timer>();
 
+	// Permet de mettre à jour le mot de passe.
 	const updatePassword = ( event: React.ChangeEvent<HTMLInputElement> ) =>
 	{
 		setPassword( event.target.value );
 	};
 
+	// Permet de mettre à jour le message qui sera envoyé.
 	const updateMessage = ( event: React.ChangeEvent<HTMLInputElement> ) =>
 	{
 		setMessage( event.target.value );
+	};
+
+	// Permet de mettre à jour le délai entre chaque envoi de message.
+	const updateDelay = ( event: React.ChangeEvent<HTMLInputElement> ) =>
+	{
+		setDelay( parseInt( event.target.value ) );
 	};
 
 	// Permet de démarrer la simulation d'écriture.
@@ -69,12 +78,15 @@ export default function Home()
 	// Permet d'envoyer un message au travers de l'API de Discord.
 	const sendMessage = () =>
 	{
-		fetch( window.location.pathname + "api/message?secret=" + password + "&message=" + message )
-			.then( response => setCode( response.status ) );
+		setTimeout( () =>
+		{
+			fetch( window.location.pathname + "api/message?secret=" + password + "&message=" + message )
+				.then( response => setCode( response.status ) );
 
-		setMessage( "" );
+			setMessage( "" );
 
-		console.log( "Requête de simulation de messages envoyée." );
+			console.log( "Requête de simulation de messages envoyée." );
+		}, delay * 1000 );
 	};
 
 	// Affichage du rendu HTML de la page.
@@ -91,6 +103,8 @@ export default function Home()
 			<input type="text" value={message} onChange={updateMessage} placeholder="Message" />
 
 			<button onClick={sendMessage}>Appuyez ici pour envoyer le message</button>
+
+			<input type="number" value={delay} onChange={updateDelay} placeholder="Délai en secondes" />
 
 			<h1>Activité en ligne</h1>
 
