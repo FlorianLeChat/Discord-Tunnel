@@ -25,6 +25,9 @@
     "node": ">=20.0",
     "npm": ">=9.6"
   },
+  "overrides": {
+    "uuid": "~9.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build && cd ../../.. && ./mvnw clean install",
