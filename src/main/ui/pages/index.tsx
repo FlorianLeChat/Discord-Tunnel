@@ -19,7 +19,7 @@ export default function Home()
 	};
 
 	// Permet de mettre à jour le message qui sera envoyé.
-	const updateMessage = ( event: React.ChangeEvent<HTMLInputElement> ) =>
+	const updateMessage = ( event: React.ChangeEvent<HTMLTextAreaElement> ) =>
 	{
 		setMessage( event.target.value );
 	};
@@ -100,7 +100,7 @@ export default function Home()
 
 			<h1>Envoi de messages</h1>
 
-			<input type="text" value={message} onChange={updateMessage} placeholder="Message" />
+			<textarea value={message} onChange={updateMessage} placeholder="Message" />
 
 			<button onClick={sendMessage}>Appuyez ici pour envoyer le message</button>
 
