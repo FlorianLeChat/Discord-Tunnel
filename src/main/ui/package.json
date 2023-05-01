@@ -13,7 +13,7 @@
     "url": "https://github.com/FlorianLeChat/Discord-Tunnel/issues"
   },
   "dependencies": {
-    "next": "~13.2"
+    "next": "~13.3"
   },
   "devDependencies": {
     "@types/node": "~18.15",
