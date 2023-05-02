@@ -91,30 +91,32 @@ export default function Home()
 
 	// Affichage du rendu HTML de la page.
 	return (
-		<section>
-			<h1>État d'écriture</h1>
 
-			<button onClick={startTyping}>Appuyez ici pour simuler l'écriture</button>
 
-			<button onClick={stopTyping}>Appuyez ici pour arrêter la simulation</button>
+		<section className="flex flex-col gap-4 items-start m-4">
+			<h1 className="text-3xl font-bold underline">État d'écriture</h1>
 
-			<h1>Envoi de messages</h1>
+			<button onClick={startTyping} className="bg-green-500 rounded-lg p-2">Appuyez ici pour simuler l'écriture</button>
 
-			<textarea value={message} onChange={updateMessage} placeholder="Message" />
+			<button onClick={stopTyping} className="bg-red-500 rounded-lg p-2">Appuyez ici pour arrêter la simulation</button>
 
-			<button onClick={sendMessage}>Appuyez ici pour envoyer le message</button>
+			<h1 className="text-3xl font-bold underline">Envoi de messages</h1>
 
-			<input type="number" value={delay} onChange={updateDelay} placeholder="Délai en secondes" />
+			<textarea value={message} onChange={updateMessage} placeholder="Message" className="border-2 border-black" />
 
-			<h1>Activité en ligne</h1>
+			<button onClick={sendMessage} className="bg-blue-500 rounded-lg p-2">Appuyez ici pour envoyer le message</button>
 
-			<button onClick={startPresence}>Appuyez ici pour simuler la présence</button>
+			<input type="number" value={delay} onChange={updateDelay} placeholder="Délai en secondes" className="border-2 border-black" />
 
-			<button onClick={stopPresence}>Appuyez ici pour arrêter la présence</button>
+			<h1 className="text-3xl font-bold underline">Activité en ligne</h1>
 
-			<h2>Sécurité</h2>
+			<button onClick={startPresence} className="bg-green-500 rounded-lg p-2">Appuyez ici pour simuler la présence</button>
 
-			<input type="password" value={password} onChange={updatePassword} placeholder="Mot de passe" />
+			<button onClick={stopPresence} className="bg-red-500 rounded-lg p-2">Appuyez ici pour arrêter la présence</button>
+
+			<h2 className="text-2xl font-bold underline">Sécurité</h2>
+
+			<input type="password" value={password} onChange={updatePassword} placeholder="Mot de passe" className="border-2 border-black" />
 
 			Dernier code HTTP : {code}
 		</section>

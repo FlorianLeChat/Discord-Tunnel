@@ -1,8 +1,4 @@
-section
-{
-	/* Conteneur de la page. */
-	gap: 1rem;
-	display: flex;
-	align-items: flex-start;
-	flex-direction: column;
-}
+/* Importation des dépendances externes. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
