@@ -33,8 +33,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build && npm run export && cd ../../.. && ./mvnw clean install",
-    "export": "next export -o ../resources/static",
+    "build": "next build && cd ../../.. && ./mvnw clean install",
     "start": "pm2 start --name discord-tunnel java -- -jar ../../../target/discord-tunnel-1.0.0.jar",
     "stop": "pm2 delete discord-tunnel",
     "restart": "pm2 restart discord-tunnel --update-env",

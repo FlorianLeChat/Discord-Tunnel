@@ -5,6 +5,7 @@
  */
 module.exports = {
 	output: "export",
+	distDir: "../resources/static",
 	basePath: "",
 	poweredByHeader: false,
 	reactStrictMode: true
