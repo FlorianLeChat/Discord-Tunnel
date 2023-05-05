@@ -6,6 +6,9 @@
 // Importation de la feuille de style CSS globale.
 import "./index.css";
 
+// Importation du normalisateur TypeScript.
+import "@total-typescript/ts-reset";
+
 // Importation des dépendances.
 import Head from "next/head";
 import { useRouter } from "next/router";
