@@ -1,6 +1,6 @@
 //
 // Page utilisée pour générer le contenu statique HTML de la page.
-// 	Source : https://nextjs.org/docs/advanced-features/custom-app
+//  Source : https://nextjs.org/docs/advanced-features/custom-app
 //
 
 // Importation de la feuille de style CSS globale.
@@ -20,6 +20,7 @@ export default function DiscordTunnel( { Component, pageProps }: AppProps )
 {
 	// Déclaration des constantes.
 	const { basePath } = useRouter();
+	const favicons = `${ basePath }/assets/favicons`;
 
 	// Génération de la structure de la page.
 	return (
@@ -33,14 +34,14 @@ export default function DiscordTunnel( { Component, pageProps }: AppProps )
 				<title>Discord Tunnel</title>
 
 				{/* Icônes et manifeste du document */}
-				<link rel="icon" type="image/webp" sizes="16x16" href={basePath + "/assets/favicons/16x16.webp"} />
-				<link rel="icon" type="image/webp" sizes="32x32" href={basePath + "/assets/favicons/32x32.webp"} />
-				<link rel="icon" type="image/webp" sizes="48x48" href={basePath + "/assets/favicons/48x48.webp"} />
-				<link rel="icon" type="image/webp" sizes="192x192" href={basePath + "/assets/favicons/192x192.webp"} />
-				<link rel="icon" type="image/webp" sizes="512x512" href={basePath + "/assets/favicons/512x512.webp"} />
+				<link rel="icon" type="image/webp" sizes="16x16" href={`${ favicons }/16x16.webp`} />
+				<link rel="icon" type="image/webp" sizes="32x32" href={`${ favicons }/32x32.webp`} />
+				<link rel="icon" type="image/webp" sizes="48x48" href={`${ favicons }/48x48.webp`} />
+				<link rel="icon" type="image/webp" sizes="192x192" href={`${ favicons }/192x192.webp`} />
+				<link rel="icon" type="image/webp" sizes="512x512" href={`${ favicons }/512x512.webp`} />
 
-				<link rel="apple-touch-icon" href={basePath + "/assets/favicons/180x180.webp"} />
-				<link rel="manifest" href={basePath + "/manifest.json"} />
+				<link rel="apple-touch-icon" href={`${ favicons }/180x180.webp`} />
+				<link rel="manifest" href={`${ basePath }/manifest.json`} />
 			</Head>
 
 			{/* Affichage du composant demandé */}
@@ -49,4 +50,4 @@ export default function DiscordTunnel( { Component, pageProps }: AppProps )
 			</main>
 		</>
 	);
-};
+}
