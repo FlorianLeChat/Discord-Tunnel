@@ -52,10 +52,9 @@ node_modules
 
 # next.js
 .next/
-resources
 
 # production
-/build
+build
 
 # misc
 .DS_Store

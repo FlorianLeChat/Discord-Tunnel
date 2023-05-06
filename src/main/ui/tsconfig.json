@@ -1,6 +1,6 @@
 {
     "exclude": ["node_modules"],
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../resources/static/types/**/*.ts"],
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "build/types/**/*.ts"],
     "plugins": [
         {"name": "next"}
     ],
