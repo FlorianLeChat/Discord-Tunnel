@@ -1,7 +1,7 @@
 {
 	"ignorePatterns": ["next-env.d.ts", "*.config.js"],
 	"parserOptions": {
-		"project": ["./tsconfig.json", "src/main/ui/tsconfig.json"]
+		"project": ["./tsconfig.json"]
 	},
 	"globals": {
 		"JSX": "readonly",
