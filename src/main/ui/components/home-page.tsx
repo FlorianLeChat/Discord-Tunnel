@@ -1,9 +1,12 @@
 //
-// Route vers la page d'accueil du site.
+// Composant client des contrôles de l'API Discord sur la page d'accueil.
 //
+
+"use client";
+
 import { useState, ChangeEvent } from "react";
 
-export default function Home()
+export default function HomePage()
 {
 	// Déclaration des variables.
 	const [ code, setCode ] = useState( 0 );

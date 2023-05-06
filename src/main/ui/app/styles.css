@@ -1,4 +1,4 @@
 /* Importation des dépendances externes. */
 @tailwind base;
-@tailwind components;
 @tailwind utilities;
+@tailwind components;
