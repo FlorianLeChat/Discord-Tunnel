@@ -4,7 +4,7 @@
     "compilerOptions": {
         "lib": ["dom", "dom.iterable", "esnext"],
         "jsx": "preserve",
-        "paths": {"@/*": ["./*"], "*": ["./node_modules/*"]},
+        "paths": {"@/*": ["./*"]},
         "noEmit": true,
         "strict": true,
         "target": "esnext",
