@@ -50,7 +50,7 @@ export default function Page()
 {
 	// Affichage du rendu HTML de la page.
 	return (
-		<Suspense fallback={<p>Chargement...</p>}>
+		<Suspense fallback={<p>Chargement en cours...</p>}>
 			<HomePage />
 		</Suspense>
 	);
