@@ -5,7 +5,7 @@
  */
 module.exports = {
 	output: "export",
-	distDir: "build",
+	distDir: "build/static",
 	basePath: "",
 	poweredByHeader: false,
 	reactStrictMode: true
