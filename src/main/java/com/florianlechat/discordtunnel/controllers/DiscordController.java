@@ -110,6 +110,21 @@ public class DiscordController
 			return ResponseEntity.status(401).build();
 		}
 
+		// On impose après si nécessaire un délai avant l'envoi du message.
+		Integer delay = Integer.parseInt(request.getParameter("delay"));
+
+		if (delay != null && delay > 0)
+		{
+			try
+			{
+				Thread.sleep(delay * 1000);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
 		// On effectue ensuite la requête HTTP.
 		URL url = new URL("https://discord.com/api/v9/channels/1097906775291859027/messages");
 		String body = "{\"content\":\"" + request.getParameter("message") + "\",\"nonce\":\"" + generateNonce() + "\",\"tts\":false,\"flags\":0}";
