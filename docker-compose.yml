@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  # https://github.com/FlorianLeChat/Discord-Tunnel
+  node:
+    image: discord-tunnel
+    container_name: website
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8080:8080
