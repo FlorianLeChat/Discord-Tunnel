@@ -26,17 +26,21 @@ WORKDIR /usr/src/app
 # Copie du reste des fichiers.
 COPY --chown=java:java . .
 
+# Conversion des fins de ligne Windows vers Linux.
+# https://stackoverflow.com/a/62813766
+RUN apk add --no-cache dos2unix && dos2unix mvnw
+
 # Compilation générale du site.
 RUN cd src/main/ui && npm run build
 
+# Modification des droits d'accès du programme final.
+RUN chown -R java:java target
+
 # Basculement vers l'utilisateur non-administrateur.
 USER java
-
-# Modification des droits d'accès des fichiers statiques.
-RUN chown -R java:java /usr/src/app/src/main/ui/build
 
 # Exposition du port 8080.
 EXPOSE 8080
 
 # Lancement de l'application.
-CMD ["java", "-jar", "../../../target/discord-tunnel-1.0.0.jar"]
+CMD ["java", "-jar", "target/discord-tunnel-1.0.0.jar"]
