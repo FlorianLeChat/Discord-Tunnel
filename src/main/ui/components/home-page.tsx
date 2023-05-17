@@ -74,9 +74,16 @@ export default function HomePage()
 	const sendMessage = () =>
 	{
 		fetch( `${ window.location.pathname }api/message?secret=${ password }&message=${ message }&delay=${ delay }` )
-			.then( ( response ) => setCode( response.status ) );
+			.then( ( response ) =>
+			{
+				if ( response.status === 200 )
+				{
+					setDelay( 0 );
+					setMessage( "" );
+				}
 
-		setMessage( "" );
+				setCode( response.status );
+			} );
 	};
 
 	// Affichage du rendu HTML de la page.
