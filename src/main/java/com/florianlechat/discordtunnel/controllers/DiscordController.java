@@ -127,7 +127,7 @@ public class DiscordController
 
 		// On effectue ensuite la requête HTTP.
 		URL url = new URL("https://discord.com/api/v9/channels/1097906775291859027/messages");
-		String body = "{\"content\":\"" + request.getParameter("message") + "\",\"nonce\":\"" + generateNonce() + "\",\"tts\":false,\"flags\":0}";
+		String body = "{\"content\":\"" + request.getParameter("message").trim() + "\",\"nonce\":\"" + generateNonce() + "\",\"tts\":false,\"flags\":0}";
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
 		connection.setRequestMethod("POST");
