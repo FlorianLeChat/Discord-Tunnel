@@ -133,6 +133,24 @@ public class DiscordController
 		if (writing > 0)
 		{
 			SendTyping(request);
+
+			// Si le message est trop long, on renvoie une simulation de l'écriture
+			//  après 7 secondes pour continuer l'affichage de l'indicateur.
+			if (writing >= 7)
+			{
+				new Thread(() ->
+				{
+					try
+					{
+						Thread.sleep(7000);
+						SendTyping(request);
+					}
+					catch (Exception e)
+					{
+						e.printStackTrace();
+					}
+				}).start();
+			}
 		}
 
 		// On impose alors un quelconque délai avant l'envoi du message.
