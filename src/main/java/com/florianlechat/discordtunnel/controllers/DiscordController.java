@@ -25,7 +25,7 @@ public class DiscordController
 	{
 		// On définit la longueur du nombre arbitraire
 		//  avant de créer un tableau de bytes pour le stocker.
-		int nonceLength = 19;
+		Integer nonceLength = 19;
 		byte[] nonceBytes = new byte[nonceLength];
 
 		// On utilise ensuite SecureRandom pour générer des
