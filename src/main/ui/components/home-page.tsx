@@ -73,6 +73,10 @@ export default function HomePage()
 	// Permet d'envoyer un message au travers de l'API de Discord.
 	const sendMessage = () =>
 	{
+		// Arrêt de la simulation d'écriture.
+		stopTyping();
+
+		// Envoi du message avec ou sans délai.
 		fetch( `${ window.location.pathname }api/message?secret=${ password }&message=${ message }&delay=${ delay }` )
 			.then( ( response ) =>
 			{
