@@ -114,7 +114,7 @@ public class DiscordController
 		String delay = request.getParameter("delay");
 		String message = request.getParameter("message");
 
-		if (delay == null || message == null || delay.isEmpty() || message.isEmpty())
+		if (delay == null || message == null || delay.isEmpty() || message.isEmpty() || !delay.matches("[0-9]+"))
 		{
 			return ResponseEntity.status(400).build();
 		}
