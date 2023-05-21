@@ -20,6 +20,9 @@ public class DiscordController
 	// Initialisation du WebSocket de Discord.
 	DiscordGateway gateway = new DiscordGateway();
 
+	// Nombre de caractères écrits par seconde (simulation par un humain).
+	final Integer CHARACTERS_PER_SECOND = 5;
+
 	// Permet de générer un nombre arbitraire en Base64.
 	public static String generateNonce()
 	{
@@ -119,12 +122,25 @@ public class DiscordController
 			return ResponseEntity.status(400).build();
 		}
 
+		// On calcule le temps pour écrire le message en fonction de sa longueur
+		//  avant de l'ajouter au délai existant.
+		Integer length = message.replaceAll("\\s+", "").length();
+		Integer writing = Math.round(length / CHARACTERS_PER_SECOND);
+		Integer cooldown = Integer.parseInt(delay);
+		cooldown = Math.max(cooldown + writing, cooldown);
 
-		if (delay > 0)
+		// On affiche une simulation de l'écriture du message si nécessaire.
+		if (writing > 0)
+		{
+			SendTyping(request);
+		}
+
+		// On impose alors un quelconque délai avant l'envoi du message.
+		if (cooldown > 0)
 		{
 			try
 			{
-				Thread.sleep(delay * 1000);
+				Thread.sleep(cooldown * 1000);
 			}
 			catch (InterruptedException e)
 			{
@@ -132,7 +148,7 @@ public class DiscordController
 			}
 		}
 
-		// On effectue ensuite la requête HTTP.
+		// On effectue après la requête HTTP.
 		URL url = new URL("https://discord.com/api/v9/channels/1097906775291859027/messages");
 		String body = "{\"content\":\"" + message.trim() + "\",\"nonce\":\"" + generateNonce() + "\",\"tts\":false,\"flags\":0}";
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -162,7 +178,7 @@ public class DiscordController
 		connection.setDoInput(true);
 		connection.setDoOutput(true);
 
-		// On écrit alors le corps de la requête avant
+		// On écrit dans ce cas le corps de la requête avant
 		//  de l'envoyer.
 		OutputStream os = connection.getOutputStream();
 		os.write(body.getBytes("UTF-8"));
