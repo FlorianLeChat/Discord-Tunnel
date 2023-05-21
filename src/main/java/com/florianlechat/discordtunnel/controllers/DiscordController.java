@@ -110,10 +110,17 @@ public class DiscordController
 			return ResponseEntity.status(401).build();
 		}
 
-		// On impose après si nécessaire un délai avant l'envoi du message.
-		Integer delay = Integer.parseInt(request.getParameter("delay"));
+		// On vérifie ensuite si un délai et un message ont été spécifiés.
+		String delay = request.getParameter("delay");
+		String message = request.getParameter("message");
 
-		if (delay != null && delay > 0)
+		if (delay == null || message == null || delay.isEmpty() || message.isEmpty())
+		{
+			return ResponseEntity.status(400).build();
+		}
+
+
+		if (delay > 0)
 		{
 			try
 			{
@@ -127,7 +134,7 @@ public class DiscordController
 
 		// On effectue ensuite la requête HTTP.
 		URL url = new URL("https://discord.com/api/v9/channels/1097906775291859027/messages");
-		String body = "{\"content\":\"" + request.getParameter("message").trim() + "\",\"nonce\":\"" + generateNonce() + "\",\"tts\":false,\"flags\":0}";
+		String body = "{\"content\":\"" + message.trim() + "\",\"nonce\":\"" + generateNonce() + "\",\"tts\":false,\"flags\":0}";
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
 		connection.setRequestMethod("POST");
