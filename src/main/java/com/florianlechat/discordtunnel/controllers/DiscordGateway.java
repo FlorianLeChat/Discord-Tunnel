@@ -206,6 +206,15 @@ public class DiscordGateway
 	public void onWebSocketClose(CloseReason reason)
 	{
 		System.out.println("Déconnexion du WebSocket de Discord : " + reason);
+
+		// On force la reconnexion si la fermeture du WebSocket est anormale.
+		//  Source : https://stackoverflow.com/a/19305172
+		if (reason.getCloseCode() == CloseReason.CloseCodes.CLOSED_ABNORMALLY)
+		{
+			System.out.println("Reconnexion du WebSocket de Discord...");
+
+			this.connect(this.token);
+		}
 	}
 
 	// Permet de recevoir les messages d'erreur du WebSocket.
