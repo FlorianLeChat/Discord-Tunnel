@@ -80,13 +80,9 @@ export default function HomePage()
 		fetch( `${ window.location.pathname }api/message?secret=${ password }&message=${ message }&delay=${ delay }` )
 			.then( ( response ) =>
 			{
-				if ( response.status === 200 )
-				{
-					setDelay( 0 );
-					setMessage( "" );
-				}
-
 				setCode( response.status );
+				setDelay( 0 );
+				setMessage( "" );
 			} );
 	};
 
