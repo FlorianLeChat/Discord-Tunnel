@@ -81,9 +81,11 @@ export default function HomePage()
 			.then( ( response ) =>
 			{
 				setCode( response.status );
-				setDelay( 0 );
-				setMessage( "" );
 			} );
+
+		// Réinitialisation des champs de saisie.
+		setDelay( 0 );
+		setMessage( "" );
 	};
 
 	// Affichage du rendu HTML de la page.
