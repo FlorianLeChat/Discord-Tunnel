@@ -5,7 +5,7 @@
 
 import type { ReactNode } from "react";
 
-import "./styles.css";
+import "./page.css";
 import "@total-typescript/ts-reset";
 
 export default function RootLayout( { children }: { children: ReactNode; } )
