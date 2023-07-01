@@ -19,7 +19,7 @@
     "autoprefixer": "~10.4"
   },
   "devDependencies": {
-    "@types/node": "~20.2",
+    "@types/node": "~20.3",
     "@types/react": "~18.2",
     "pm2": "~5.3",
     "typescript": "~5.1",
