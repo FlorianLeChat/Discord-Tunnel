@@ -37,8 +37,8 @@ public class DiscordGateway
 
 			this.token = token;
 
-			container.setDefaultMaxTextMessageBufferSize(128 * 1024);
-			container.setDefaultMaxBinaryMessageBufferSize(128 * 1024);
+			container.setDefaultMaxTextMessageBufferSize(1024 * 1024 * 64);
+			container.setDefaultMaxBinaryMessageBufferSize(1024 * 1024 * 64);
 			container.connectToServer(this, new URI(DISCORD_GATEWAY_URL));
 		}
 		catch (DeploymentException | URISyntaxException | IOException e)
