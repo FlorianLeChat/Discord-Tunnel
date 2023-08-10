@@ -8,7 +8,10 @@ import { useState, ChangeEvent } from "react";
 
 export default function HomePage()
 {
-	// Déclaration des variables.
+	// Déclaration des constantes.
+	const url = process.env.NODE_ENV === "production" ? window.location.pathname : "http://localhost:8080/";
+
+	// Déclaration des variables d'état.
 	const [ code, setCode ] = useState( 0 );
 	const [ delay, setDelay ] = useState( 0 );
 	const [ message, setMessage ] = useState( "" );
@@ -38,7 +41,7 @@ export default function HomePage()
 	{
 		const typing = () =>
 		{
-			fetch( `${ window.location.pathname }api/typing?secret=${ password }` )
+			fetch( `${ url }api/typing?secret=${ password }` )
 				.then( ( response ) => setCode( response.status ) );
 		};
 
@@ -59,14 +62,14 @@ export default function HomePage()
 	// Permet de démarrer la simulation de présence.
 	const startPresence = () =>
 	{
-		fetch( `${ window.location.pathname }api/heartbeat?secret=${ password }&state=1` )
+		fetch( `${ url }api/heartbeat?secret=${ password }&token=${ token }&state=1` )
 			.then( ( response ) => setCode( response.status ) );
 	};
 
 	// Permet d'arrêter la simulation de présence.
 	const stopPresence = () =>
 	{
-		fetch( `${ window.location.pathname }api/heartbeat?secret=${ password }&state=0` )
+		fetch( `${ url }api/heartbeat?secret=${ password }&state=0` )
 			.then( ( response ) => setCode( response.status ) );
 	};
 
@@ -77,7 +80,7 @@ export default function HomePage()
 		stopTyping();
 
 		// Envoi du message avec ou sans délai.
-		fetch( `${ window.location.pathname }api/message?secret=${ password }&message=${ message }&delay=${ delay }` )
+		fetch( `${ url }api/message?secret=${ password }&message=${ message }&delay=${ delay }` )
 			.then( ( response ) =>
 			{
 				setCode( response.status );
