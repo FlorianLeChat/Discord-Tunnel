@@ -8,9 +8,6 @@ import { useState, ChangeEvent } from "react";
 
 export default function HomePage()
 {
-	// Déclaration des constantes.
-	const url = process.env.NODE_ENV === "production" ? window.location.pathname : "http://localhost:8080/";
-
 	// Déclaration des variables d'état.
 	const [ code, setCode ] = useState( 0 );
 	const [ delay, setDelay ] = useState( 0 );
@@ -18,6 +15,9 @@ export default function HomePage()
 	const [ message, setMessage ] = useState( "" );
 	const [ password, setPassword ] = useState( "" );
 	const [ typingTimer, setTypingTimer ] = useState<NodeJS.Timer>();
+
+	// Permet de récupérer l'URL de l'application.
+	const getUrl = () => ( process.env.NODE_ENV === "production" ? window.location.pathname : "http://localhost:8080/" );
 
 	// Permet de mettre à jour le mot de passe.
 	const updatePassword = ( event: ChangeEvent<HTMLInputElement> ) => setPassword( event.target.value );
@@ -39,7 +39,7 @@ export default function HomePage()
 	{
 		const typing = () =>
 		{
-			fetch( `${ url }api/typing?secret=${ password }` )
+			fetch( `${ getUrl() }api/typing?secret=${ password }` )
 				.then( ( response ) => setCode( response.status ) );
 		};
 
@@ -60,14 +60,14 @@ export default function HomePage()
 	// Permet de démarrer la simulation de présence.
 	const startPresence = () =>
 	{
-		fetch( `${ url }api/heartbeat?secret=${ password }&token=${ token }&state=1` )
+		fetch( `${ getUrl() }api/heartbeat?secret=${ password }&token=${ token }&state=1` )
 			.then( ( response ) => setCode( response.status ) );
 	};
 
 	// Permet d'arrêter la simulation de présence.
 	const stopPresence = () =>
 	{
-		fetch( `${ url }api/heartbeat?secret=${ password }&state=0` )
+		fetch( `${ getUrl() }api/heartbeat?secret=${ password }&state=0` )
 			.then( ( response ) => setCode( response.status ) );
 	};
 
@@ -78,7 +78,7 @@ export default function HomePage()
 		stopTyping();
 
 		// Envoi du message avec ou sans délai.
-		fetch( `${ url }api/message?secret=${ password }&message=${ message }&delay=${ delay }` )
+		fetch( `${ getUrl() }api/message?secret=${ password }&message=${ message }&delay=${ delay }` )
 			.then( ( response ) =>
 			{
 				setCode( response.status );
