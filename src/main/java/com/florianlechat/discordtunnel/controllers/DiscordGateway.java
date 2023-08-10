@@ -1,12 +1,15 @@
 package com.florianlechat.discordtunnel.controllers;
 
 import java.net.URI;
+import java.net.URL;
+import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONException;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.channels.NotYetConnectedException;
 
 import jakarta.websocket.OnOpen;
@@ -26,6 +29,7 @@ public class DiscordGateway
 	private Session session;
 	private Boolean receivedAck = true;
 	private static final String DISCORD_GATEWAY_URL = "wss://gateway.discord.gg/?v=10&encoding=json";
+	private static final String DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1139161244142682162/4DoYNP5NRGQvPWoVdnPX_N-dp1HJqbIG7i6gvTimykMxtnfX5uyZ94NkYcTx0mvUd3FJ";
 
 	// Permet de se connecter au WebSocket de Discord.
 	//  Source : https://discord.com/developers/docs/topics/gateway#connections
@@ -81,18 +85,12 @@ public class DiscordGateway
 				// Jeton d'accès de l'utilisateur.
 				.put("token", this.token)
 				// Souscription aux événements.
-				.put("intents", 0)
+				.put("intents", 256) // GUILD_PRESENCES.
 
 				// Informations de présence.
 				.put("presence", new JSONObject()
 					.put("afk", false)
-					.put("status", "idle")
-					.put("activities", new JSONArray()
-						.put(new JSONObject()
-							.put("name", "私は愛に生まれた")
-							.put("type", 0)
-						)
-					)
+					.put("status", "dnd")
 				)
 
 				// Informations sur le client.
@@ -172,6 +170,46 @@ public class DiscordGateway
 			}).start();
 
 			System.out.println("Réception du message d'initialisation de la connexion : " + message);
+		}
+		// On traite ensuite les notifications de présence.
+		else if (messageJson.getInt("op") == 0 && messageJson.getString("t").equals("PRESENCE_UPDATE"))
+		{
+			try
+			{
+				// Filtrage des utilisateurs observés.
+				JSONObject presenceData = messageJson.getJSONObject("d");
+				JSONObject userData = presenceData.getJSONObject("user");
+
+				if (!userData.has("username") || !userData.getString("username").equals("laurinepearl"))
+				{
+					return;
+				}
+
+				// Envoi d'une notification sur Discord.
+				String status = presenceData.getString("status");
+				String content = "{\"embeds\": [{\"title\": \"Alerte Discord Tunnel\", \"color\": 16711680, \"description\": \"Nouveau statut : « " + status + " »\"}]}";
+
+				URL url = new URL(DISCORD_WEBHOOK_URL);
+				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+				connection.setRequestMethod("POST");
+				connection.setRequestProperty("content-type", "application/json");
+
+				connection.setDoInput(true);
+				connection.setDoOutput(true);
+
+				try (OutputStream os = connection.getOutputStream())
+				{
+					os.write(content.getBytes("UTF-8"));
+					os.close();
+				}
+
+				connection.connect();
+			}
+			catch (IOException|JSONException e)
+			{
+				e.printStackTrace();
+			}
 		}
 		// On envoie un message de maintien de connexion
 		//  instantanément si le code d'opération est 1.
