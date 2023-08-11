@@ -38,10 +38,11 @@ public class DiscordGateway
 	// Permet de journaliser les messages en indiquant la date et l'heure.
 	private void logMessage(String message)
 	{
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat.setTimeZone(java.util.TimeZone.getTimeZone("Europe/Paris"));
 
-        System.out.println("[" + dateFormat.format(new Date()) + "] " + message);
-    }
+		System.out.println("[" + dateFormat.format(new Date()) + "] " + message);
+	}
 
 	// Permet de se connecter au WebSocket de Discord.
 	//  Source : https://discord.com/developers/docs/topics/gateway#connections
