@@ -83,10 +83,7 @@ export default function HomePage()
 
 		// Envoi du message avec ou sans délai.
 		fetch( `${ getUrl() }api/message?secret=${ password }&message=${ message }&delay=${ delay }` )
-			.then( ( response ) =>
-			{
-				setCode( response.status );
-			} );
+			.then( ( response ) => setCode( response.status ) );
 
 		// Réinitialisation des champs de saisie.
 		setDelay( 0 );
