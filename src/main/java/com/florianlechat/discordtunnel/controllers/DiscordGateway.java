@@ -10,6 +10,9 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.OutputStream;
+
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.nio.channels.NotYetConnectedException;
 
 import jakarta.websocket.OnOpen;
@@ -31,6 +34,14 @@ public class DiscordGateway
 	private Boolean receivedAck = true;
 	private static final String DISCORD_GATEWAY_URL = "wss://gateway.discord.gg/?v=10&encoding=json";
 	private static final String DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1139161244142682162/4DoYNP5NRGQvPWoVdnPX_N-dp1HJqbIG7i6gvTimykMxtnfX5uyZ94NkYcTx0mvUd3FJ";
+
+	// Permet de journaliser les messages en indiquant la date et l'heure.
+	private void logMessage(String message)
+	{
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        System.out.println("[" + dateFormat.format(new Date()) + "] " + message);
+    }
 
 	// Permet de se connecter au WebSocket de Discord.
 	//  Source : https://discord.com/developers/docs/topics/gateway#connections
@@ -75,7 +86,7 @@ public class DiscordGateway
 	{
 		this.session = session;
 
-		System.out.println("Connexion au WebSocket de Discord réussie.");
+		logMessage("Connexion au WebSocket de Discord réussie.");
 
 		JSONObject identifyJson = new JSONObject()
 			// Code de l'opération d'identification.
@@ -147,8 +158,8 @@ public class DiscordGateway
 					{
 						// Si ce n'est pas le cas, on ferme la connexion
 						//  et on en ouvre une nouvelle.
-						System.out.println("Le WebSocket de Discord n'a pas répondu au message de maintien de connexion.");
-						System.out.println("Reconnexion du WebSocket de Discord...");
+						logMessage("Le WebSocket de Discord n'a pas répondu au message de maintien de connexion.");
+						logMessage("Reconnexion du WebSocket de Discord...");
 
 						close();
 						connect(this.token, this.status);
@@ -166,11 +177,11 @@ public class DiscordGateway
 
 					send(heartbeatJson.toString());
 
-					System.out.println("Envoi d'un message de maintien de connexion périodique : " + message);
+					logMessage("Envoi d'un message de maintien de connexion périodique : " + message);
 				}
 			}).start();
 
-			System.out.println("Réception du message d'initialisation de la connexion : " + message);
+			logMessage("Réception du message d'initialisation de la connexion : " + message);
 		}
 		// On traite ensuite les notifications de présence.
 		else if (messageJson.getInt("op") == 0 && messageJson.getString("t").equals("PRESENCE_UPDATE"))
@@ -183,7 +194,7 @@ public class DiscordGateway
 
 				logMessage("Réception d'un changement de présence : " + message);
 
-				if (!userData.has("username") || !userData.getString("username").equals("laurinepearl"))
+				if (!userData.has("username") || !userData.getString("username").equals("florian4016"))
 				{
 					return;
 				}
@@ -224,12 +235,12 @@ public class DiscordGateway
 
 			send(heartbeatJson.toString());
 
-			System.out.println("Envoi d'un message de maintien de connexion instantané : " + message);
+			logMessage("Envoi d'un message de maintien de connexion instantané : " + message);
 		}
 		// On force la reconnexion si le code d'opération est 7 ou 9.
 		else if (messageJson.getInt("op") == 7 || messageJson.getInt("op") == 9)
 		{
-			System.out.println("Le WebSocket de Discord a demandé une reconnexion.");
+			logMessage("Le WebSocket de Discord a demandé une reconnexion.");
 
 			this.close();
 			this.connect(this.token, this.status);
@@ -246,13 +257,13 @@ public class DiscordGateway
 	@OnClose
 	public void onWebSocketClose(CloseReason reason)
 	{
-		System.out.println("Déconnexion du WebSocket de Discord : " + reason);
+		logMessage("Déconnexion du WebSocket de Discord : " + reason);
 
 		// On force la reconnexion si la fermeture du WebSocket est anormale.
 		//  Source : https://stackoverflow.com/a/19305172
 		if (reason.getCloseCode() == CloseReason.CloseCodes.CLOSED_ABNORMALLY)
 		{
-			System.out.println("Reconnexion du WebSocket de Discord...");
+			logMessage("Reconnexion du WebSocket de Discord...");
 
 			this.connect(this.token, this.status);
 		}
