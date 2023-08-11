@@ -94,8 +94,6 @@ public class DiscordController
 		connection.setDoInput(true);
 		connection.setDoOutput(true);
 
-		connection.connect();
-
 		// On retourne enfin le résultat de la requête.
 		return ResponseEntity.status(connection.getResponseCode()).build();
 	}
@@ -205,8 +203,6 @@ public class DiscordController
 			os.write(body.getBytes("UTF-8"));
 			os.close();
 		}
-
-		connection.connect();
 
 		// On retourne enfin le résultat de la requête.
 		return ResponseEntity.status(connection.getResponseCode()).build();

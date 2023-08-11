@@ -5,13 +5,11 @@ import java.net.URL;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 
-import org.json.JSONObject;
-import org.json.JSONException;
-
 import java.io.IOException;
 import java.io.OutputStream;
 
 import java.util.Date;
+import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.nio.channels.NotYetConnectedException;
 
@@ -187,19 +185,19 @@ public class DiscordGateway
 		// On traite ensuite les notifications de présence.
 		else if (messageJson.getInt("op") == 0 && messageJson.getString("t").equals("PRESENCE_UPDATE"))
 		{
+			// Filtrage des utilisateurs observés.
+			JSONObject presenceData = messageJson.getJSONObject("d");
+			JSONObject userData = presenceData.getJSONObject("user");
+
+			logMessage("Réception d'un changement de présence : " + message);
+
+			if (!userData.has("username") || !userData.getString("username").equals("florian4016"))
+			{
+				return;
+			}
+
 			try
 			{
-				// Filtrage des utilisateurs observés.
-				JSONObject presenceData = messageJson.getJSONObject("d");
-				JSONObject userData = presenceData.getJSONObject("user");
-
-				logMessage("Réception d'un changement de présence : " + message);
-
-				if (!userData.has("username") || !userData.getString("username").equals("florian4016"))
-				{
-					return;
-				}
-
 				// Envoi d'une notification sur Discord.
 				String status = presenceData.getString("status");
 				String content = "{\"embeds\": [{\"title\": \"Alerte Discord Tunnel\", \"color\": 16711680, \"description\": \"Nouveau statut : « " + status + " »\"}]}";
@@ -209,8 +207,6 @@ public class DiscordGateway
 
 				connection.setRequestMethod("POST");
 				connection.setRequestProperty("content-type", "application/json");
-
-				connection.setDoInput(true);
 				connection.setDoOutput(true);
 
 				try (OutputStream os = connection.getOutputStream())
@@ -219,9 +215,9 @@ public class DiscordGateway
 					os.close();
 				}
 
-				connection.connect();
+				connection.getResponseCode();
 			}
-			catch (IOException|JSONException e)
+			catch (Exception e)
 			{
 				e.printStackTrace();
 			}
