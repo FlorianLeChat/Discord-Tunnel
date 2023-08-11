@@ -234,6 +234,15 @@ public class DiscordController
 		// On effectue alors la liaison aux WebSockets de Discord.
 		if (state.equals("1"))
 		{
+			// On vérifie après que le statut de présence a bien été spécifié.
+			String status = request.getParameter("status");
+
+			if (status == null || status.isEmpty())
+			{
+				return ResponseEntity.status(400).build();
+			}
+
+			// On récupère le jeton d'authentification qui doit être utilisé.
 			String token = request.getParameter("token");
 
 			if (token == null)
@@ -246,12 +255,12 @@ public class DiscordController
 			{
 				// Jeton de Zélie.
 				case 0:
-					gateway.connect("MTA5NzkwNTA4ODAxOTg0NTI2MA.GJIDh4.-C6QaRjfJ0yigjAAuC1XCdM9ThmcESjhbOr358");
+					gateway.connect("MTA5NzkwNTA4ODAxOTg0NTI2MA.GJIDh4.-C6QaRjfJ0yigjAAuC1XCdM9ThmcESjhbOr358", status);
 					break;
 
 				// Jeton de Florian.
 				case 1:
-					gateway.connect("MTgzMjcyNDExMTY3MzI2MjA5.GlyjoW.x8xViIlpR3ILr4ibaoZbgkVs_clSfdQs-YMxaY");
+					gateway.connect("MTgzMjcyNDExMTY3MzI2MjA5.GlyjoW.x8xViIlpR3ILr4ibaoZbgkVs_clSfdQs-YMxaY", status);
 					break;
 			}
 		}

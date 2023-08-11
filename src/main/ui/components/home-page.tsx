@@ -12,6 +12,7 @@ export default function HomePage()
 	const [ code, setCode ] = useState( 0 );
 	const [ delay, setDelay ] = useState( 0 );
 	const [ token, setToken ] = useState( "0" );
+	const [ status, setStatus ] = useState( "online" );
 	const [ message, setMessage ] = useState( "" );
 	const [ password, setPassword ] = useState( "" );
 	const [ typingTimer, setTypingTimer ] = useState<NodeJS.Timer>();
@@ -27,6 +28,9 @@ export default function HomePage()
 
 	// Permet de mettre à jour le token qui sera utilisé.
 	const updateToken = ( event: ChangeEvent<HTMLSelectElement> ) => setToken( event.target.value );
+
+	// Permet de mettre à jour le statut de présence qui sera utilisé.
+	const updateStatus = ( event: ChangeEvent<HTMLSelectElement> ) => setStatus( event.target.value );
 
 	// Permet de mettre à jour le délai entre chaque envoi de message.
 	const updateDelay = ( event: ChangeEvent<HTMLInputElement> ) =>
@@ -60,7 +64,7 @@ export default function HomePage()
 	// Permet de démarrer la simulation de présence.
 	const startPresence = () =>
 	{
-		fetch( `${ getUrl() }api/heartbeat?secret=${ password }&token=${ token }&state=1` )
+		fetch( `${ getUrl() }api/heartbeat?secret=${ password }&token=${ token }&status=${ status }&state=1` )
 			.then( ( response ) => setCode( response.status ) );
 	};
 
@@ -143,6 +147,13 @@ export default function HomePage()
 			<select className="border-2 border-black" onChange={updateToken}>
 				<option value="0">Token 1</option>
 				<option value="1">Token 2</option>
+			</select>
+
+			<select className="border-2 border-black" onChange={updateStatus}>
+				<option value="online">En ligne</option>
+				<option value="idle">Inactif</option>
+				<option value="dnd">Ne pas déranger</option>
+				<option value="offline">Hors ligne</option>
 			</select>
 
 			<h2 className="text-2xl font-bold underline">Sécurité</h2>

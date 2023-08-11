@@ -26,6 +26,7 @@ import jakarta.websocket.DeploymentException;
 public class DiscordGateway
 {
 	private String token;
+	private String status;
 	private Session session;
 	private Boolean receivedAck = true;
 	private static final String DISCORD_GATEWAY_URL = "wss://gateway.discord.gg/?v=10&encoding=json";
@@ -33,7 +34,7 @@ public class DiscordGateway
 
 	// Permet de se connecter au WebSocket de Discord.
 	//  Source : https://discord.com/developers/docs/topics/gateway#connections
-	public void connect(String token)
+	public void connect(String token, String status)
 	{
 		try
 		{
@@ -90,7 +91,7 @@ public class DiscordGateway
 				// Informations de présence.
 				.put("presence", new JSONObject()
 					.put("afk", false)
-					.put("status", "dnd")
+					.put("status", this.status)
 				)
 
 				// Informations sur le client.
@@ -150,7 +151,7 @@ public class DiscordGateway
 						System.out.println("Reconnexion du WebSocket de Discord...");
 
 						close();
-						connect(this.token);
+						connect(this.token, this.status);
 
 						return;
 					}
@@ -179,6 +180,8 @@ public class DiscordGateway
 				// Filtrage des utilisateurs observés.
 				JSONObject presenceData = messageJson.getJSONObject("d");
 				JSONObject userData = presenceData.getJSONObject("user");
+
+				logMessage("Réception d'un changement de présence : " + message);
 
 				if (!userData.has("username") || !userData.getString("username").equals("laurinepearl"))
 				{
@@ -229,7 +232,7 @@ public class DiscordGateway
 			System.out.println("Le WebSocket de Discord a demandé une reconnexion.");
 
 			this.close();
-			this.connect(this.token);
+			this.connect(this.token, this.status);
 		}
 		// On réceptionne enfin les messages d'acquittement
 		//  du message de maintien de connexion.
@@ -251,7 +254,7 @@ public class DiscordGateway
 		{
 			System.out.println("Reconnexion du WebSocket de Discord...");
 
-			this.connect(this.token);
+			this.connect(this.token, this.status);
 		}
 	}
 
