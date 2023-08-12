@@ -191,7 +191,7 @@ public class DiscordGateway
 
 			logMessage("Réception d'un changement de présence : " + message);
 
-			if (!userData.has("username") || !userData.getString("username").equals("florian4016"))
+			if (!userData.has("username") || !userData.getString("username").equals("laurinepearl"))
 			{
 				return;
 			}
