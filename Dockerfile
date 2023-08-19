@@ -13,7 +13,7 @@ RUN apk add --no-cache nodejs npm
 WORKDIR /usr/src/app/src/main/ui
 
 # Copie des fichiers de configuration de NPM.
-COPY src/main/ui/package*.json .
+COPY --chown=java:java src/main/ui/package*.json .
 
 # Installation des dépendances front-end.
 RUN --mount=type=cache,target=.npm \
@@ -22,6 +22,9 @@ RUN --mount=type=cache,target=.npm \
 
 # Définition du répertoire back-end.
 WORKDIR /usr/src/app
+
+# Change ownership of the installed dependencies
+RUN chown -R java:java src/main/ui/node_modules
 
 # Copie du reste des fichiers.
 COPY --chown=java:java . .
@@ -33,8 +36,12 @@ RUN apk add --no-cache dos2unix && dos2unix mvnw
 # Compilation générale du site.
 RUN cd src/main/ui && npm run build
 
+# Suppression des dépendances de développement.
+RUN npm prune --production
+
 # Modification des droits d'accès du programme final.
 RUN chown -R java:java target
+RUN chown -R java:java src/main/ui/.next
 
 # Basculement vers l'utilisateur non-administrateur.
 USER java
