@@ -6,8 +6,8 @@ FROM eclipse-temurin:17-jdk-alpine
 # Création d'un utilisateur non-administrateur.
 RUN addgroup -S java && adduser -S java -G java
 
-# Installation de NodeJS et NPM.
-RUN apk add --no-cache nodejs npm
+# Installation de NodeJS, NPM et cURL.
+RUN apk --no-cache add nodejs npm curl
 
 # Définition du répertoire front-end.
 WORKDIR /usr/src/app/src/main/ui

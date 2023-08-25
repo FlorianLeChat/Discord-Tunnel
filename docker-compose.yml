@@ -1,11 +1,26 @@
-version: "3.9"
+version: "3.8"
 
 services:
   # https://github.com/FlorianLeChat/Discord-Tunnel
   node:
     image: discord-tunnel
-    container_name: website
-    restart: unless-stopped
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      retries: 3
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+      restart_policy:
+        window: 60s
+        condition: on-failure
+        max_attempts: 5
     build:
       context: .
       dockerfile: ./Dockerfile
