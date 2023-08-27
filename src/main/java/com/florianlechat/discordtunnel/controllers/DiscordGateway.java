@@ -30,8 +30,15 @@ public class DiscordGateway
 	private String status;
 	private Session session;
 	private Boolean receivedAck = true;
+	private static final DiscordGateway instance = new DiscordGateway();
 	private static final String DISCORD_GATEWAY_URL = "wss://gateway.discord.gg/?v=10&encoding=json";
 	private static final String DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1139161244142682162/4DoYNP5NRGQvPWoVdnPX_N-dp1HJqbIG7i6gvTimykMxtnfX5uyZ94NkYcTx0mvUd3FJ";
+
+	// Permet de récupérer l'instance unique de la classe.
+	public synchronized static DiscordGateway getInstance()
+	{
+		return instance;
+	}
 
 	// Permet de journaliser les messages en indiquant la date et l'heure.
 	private void logMessage(String message)
@@ -46,11 +53,17 @@ public class DiscordGateway
 	//  Source : https://discord.com/developers/docs/topics/gateway#connections
 	public void connect(String token, String status)
 	{
+		// On ferme la connexion si elle est déjà ouverte.
+		close();
+
+		// On enregistre le jeton d'accès et le statut de l'utilisateur.
+		this.token = token;
+		this.status = status;
+
+		// On tente enfin de se connecter au WebSocket de Discord.
 		try
 		{
 			WebSocketContainer container = jakarta.websocket.ContainerProvider.getWebSocketContainer();
-
-			this.token = token;
 
 			container.setDefaultMaxTextMessageBufferSize(1024 * 1024 * 64);
 			container.setDefaultMaxBinaryMessageBufferSize(1024 * 1024 * 64);
@@ -76,6 +89,8 @@ public class DiscordGateway
 				e.printStackTrace();
 			}
 		}
+
+		session = null;
 	}
 
 	// Permet de se connecter puis de s'authentifier avec un jeton

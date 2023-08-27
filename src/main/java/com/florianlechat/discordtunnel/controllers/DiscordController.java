@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class DiscordController
 {
 	// Initialisation du WebSocket de Discord.
-	DiscordGateway gateway = new DiscordGateway();
+	final static DiscordGateway gateway = DiscordGateway.getInstance();
 
 	// Nombre de caractères écrits par seconde (simulation par un humain).
-	final Integer CHARACTERS_PER_SECOND = 5;
+	final static Integer CHARACTERS_PER_SECOND = 5;
 
 	// Permet de générer un nombre arbitraire en Base64.
 	public static String generateNonce()

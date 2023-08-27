@@ -50,4 +50,4 @@ USER java
 EXPOSE 8080
 
 # Lancement de l'application.
-CMD ["java", "-jar", "target/discord-tunnel-1.0.0.jar"]
+CMD ["java", "-Xms256M -Xmx1g", "-jar", "target/discord-tunnel-1.0.0.jar"]
