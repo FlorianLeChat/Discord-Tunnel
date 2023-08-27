@@ -146,14 +146,14 @@ public class DiscordGateway
 
 					// On vérifie par la même occasion si la connexion
 					//  est toujours ouverte.
-					if (session == null || !this.session.isOpen())
+					if (session == null || !session.isOpen())
 					{
 						return;
 					}
 
 					// On vérifie ensuite si le WebSocket de Discord a répondu
 					//  au dernier message de maintien de connexion.
-					if (!this.receivedAck)
+					if (!receivedAck)
 					{
 						// Si ce n'est pas le cas, on ferme la connexion
 						//  et on en ouvre une nouvelle.
@@ -161,12 +161,12 @@ public class DiscordGateway
 						logMessage("Reconnexion du WebSocket de Discord...");
 
 						close();
-						connect(this.token, this.status);
+						connect(token, status);
 
 						return;
 					}
 
-					this.receivedAck = false;
+					receivedAck = false;
 
 					// Dans le cas contraire, on envoie un message de maintien
 					//  de connexion périodique.
@@ -239,14 +239,14 @@ public class DiscordGateway
 		{
 			logMessage("Le WebSocket de Discord a demandé une reconnexion.");
 
-			this.close();
-			this.connect(this.token, this.status);
+			close();
+			connect(token, status);
 		}
 		// On réceptionne enfin les messages d'acquittement
 		//  du message de maintien de connexion.
 		else if (messageJson.getInt("op") == 11)
 		{
-			this.receivedAck = true;
+			receivedAck = true;
 		}
 	}
 
@@ -262,7 +262,7 @@ public class DiscordGateway
 		{
 			logMessage("Reconnexion du WebSocket de Discord...");
 
-			this.connect(this.token, this.status);
+			connect(token, status);
 		}
 	}
 
@@ -278,7 +278,7 @@ public class DiscordGateway
 	{
 		try
 		{
-			this.session.getBasicRemote().sendText(message);
+			session.getBasicRemote().sendText(message);
 		}
 		catch (IOException | NotYetConnectedException e)
 		{
