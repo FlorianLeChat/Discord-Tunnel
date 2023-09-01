@@ -15,7 +15,7 @@ export default function HomePage()
 	const [ status, setStatus ] = useState( "online" );
 	const [ message, setMessage ] = useState( "" );
 	const [ password, setPassword ] = useState( "" );
-	const [ typingTimer, setTypingTimer ] = useState<NodeJS.Timer>();
+	const [ typingTimer, setTypingTimer ] = useState<NodeJS.Timeout>();
 
 	// Permet de récupérer l'URL de l'application.
 	const getUrl = () => ( process.env.NODE_ENV === "production" ? window.location.pathname : "http://localhost:8080/" );
