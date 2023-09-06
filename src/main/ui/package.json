@@ -36,7 +36,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "lint": "eslint . --config .eslintrc.json --ext .js,.jsx,.ts,.tsx --report-unused-disable-directives",
+    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx --report-unused-disable-directives",
     "build": "next build && cd ../../.. && ./mvnw clean install -DskipTests",
     "start": "java -jar ../../../target/discord-tunnel-1.0.0.jar"
   },
