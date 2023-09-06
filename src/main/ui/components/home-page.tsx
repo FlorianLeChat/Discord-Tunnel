@@ -21,16 +21,28 @@ export default function HomePage()
 	const getUrl = () => ( process.env.NODE_ENV === "production" ? window.location.pathname : "http://localhost:8080/" );
 
 	// Permet de mettre à jour le mot de passe.
-	const updatePassword = ( event: ChangeEvent<HTMLInputElement> ) => setPassword( event.target.value );
+	const updatePassword = ( event: ChangeEvent<HTMLInputElement> ) =>
+	{
+		setPassword( event.target.value );
+	};
 
 	// Permet de mettre à jour le message qui sera envoyé.
-	const updateMessage = ( event: ChangeEvent<HTMLTextAreaElement> ) => setMessage( event.target.value );
+	const updateMessage = ( event: ChangeEvent<HTMLTextAreaElement> ) =>
+	{
+		setMessage( event.target.value );
+	};
 
 	// Permet de mettre à jour le token qui sera utilisé.
-	const updateToken = ( event: ChangeEvent<HTMLSelectElement> ) => setToken( event.target.value );
+	const updateToken = ( event: ChangeEvent<HTMLSelectElement> ) =>
+	{
+		setToken( event.target.value );
+	};
 
 	// Permet de mettre à jour le statut de présence qui sera utilisé.
-	const updateStatus = ( event: ChangeEvent<HTMLSelectElement> ) => setStatus( event.target.value );
+	const updateStatus = ( event: ChangeEvent<HTMLSelectElement> ) =>
+	{
+		setStatus( event.target.value );
+	};
 
 	// Permet de mettre à jour le délai entre chaque envoi de message.
 	const updateDelay = ( event: ChangeEvent<HTMLInputElement> ) =>
