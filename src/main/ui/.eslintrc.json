@@ -1,5 +1,5 @@
 {
-	"ignorePatterns": ["next-env.d.ts", "*.config.js", "build/**"],
+	"ignorePatterns": ["next-env.d.ts", "build/**"],
 	"parserOptions": {
 		"project": ["./tsconfig.json"]
 	},
