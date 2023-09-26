@@ -15,11 +15,11 @@
 		"quotes": ["error", "double"],
 		"no-tabs": ["error", { "allowIndentationTabs": true }],
 		"eol-last": ["error", "never"],
-		"no-shadow": "off",
+		"no-shadow": "off", // -> @typescript-eslint/no-shadow
 		"no-plusplus": "off",
 		"brace-style": ["error", "allman"],
 		"comma-dangle": ["error", "never"],
-		"no-unused-vars": "off",
+		"no-unused-vars": "off", // -> @typescript-eslint/no-unused-vars
 		"linebreak-style": "off",
 		"space-in-parens": ["error", "always"],
 		"array-bracket-spacing": ["error", "always"],
@@ -35,10 +35,7 @@
 
 		"react/jsx-indent": ["error", "tab"],
 		"react/jsx-indent-props": ["error", "tab"],
-		"react/react-in-jsx-scope": "off",
-		"react/no-array-index-key": "off",
-		"react/no-unknown-property": ["error", { "ignore": ["jsx", "global"] }],
-		"react/jsx-max-props-per-line": ["error", { "maximum": 6 }],
+		"react/react-in-jsx-scope": "off", // https://stackoverflow.com/a/61160875
 		"react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
 		"react/jsx-one-expression-per-line": "off"
 	}
