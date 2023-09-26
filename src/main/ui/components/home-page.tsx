@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { useState, type ChangeEvent } from "react";
 
 export default function HomePage()
 {
@@ -18,7 +18,9 @@ export default function HomePage()
 	const [ typingTimer, setTypingTimer ] = useState<NodeJS.Timeout>();
 
 	// Permet de récupérer l'URL de l'application.
-	const getUrl = () => ( process.env.NODE_ENV === "production" ? window.location.pathname : "http://localhost:8080/" );
+	const getUrl = () => ( process.env.NODE_ENV === "production"
+		? window.location.pathname
+		: "http://localhost:8080/" );
 
 	// Permet de mettre à jour le mot de passe.
 	const updatePassword = ( event: ChangeEvent<HTMLInputElement> ) =>
@@ -55,8 +57,7 @@ export default function HomePage()
 	{
 		const typing = () =>
 		{
-			fetch( `${ getUrl() }api/typing?secret=${ password }` )
-				.then( ( response ) => setCode( response.status ) );
+			fetch( `${ getUrl() }api/typing?secret=${ password }` ).then( ( response ) => setCode( response.status ) );
 		};
 
 		typing();
@@ -76,15 +77,17 @@ export default function HomePage()
 	// Permet de démarrer la simulation de présence.
 	const startPresence = () =>
 	{
-		fetch( `${ getUrl() }api/heartbeat?secret=${ password }&token=${ token }&status=${ status }&state=1` )
-			.then( ( response ) => setCode( response.status ) );
+		fetch(
+			`${ getUrl() }api/heartbeat?secret=${ password }&token=${ token }&status=${ status }&state=1`
+		).then( ( response ) => setCode( response.status ) );
 	};
 
 	// Permet d'arrêter la simulation de présence.
 	const stopPresence = () =>
 	{
-		fetch( `${ getUrl() }api/heartbeat?secret=${ password }&state=0` )
-			.then( ( response ) => setCode( response.status ) );
+		fetch( `${ getUrl() }api/heartbeat?secret=${ password }&state=0` ).then(
+			( response ) => setCode( response.status )
+		);
 	};
 
 	// Permet d'envoyer un message au travers de l'API de Discord.
@@ -94,8 +97,9 @@ export default function HomePage()
 		stopTyping();
 
 		// Envoi du message avec ou sans délai.
-		fetch( `${ getUrl() }api/message?secret=${ password }&message=${ message }&delay=${ delay }` )
-			.then( ( response ) => setCode( response.status ) );
+		fetch(
+			`${ getUrl() }api/message?secret=${ password }&message=${ message }&delay=${ delay }`
+		).then( ( response ) => setCode( response.status ) );
 
 		// Réinitialisation des champs de saisie.
 		setDelay( 0 );
@@ -105,17 +109,21 @@ export default function HomePage()
 	// Affichage du rendu HTML de la page.
 	return (
 		<section className="flex flex-col gap-4 items-start m-4">
-			<h1 className="text-3xl font-bold underline">État d&apos;écriture</h1>
+			<h1 className="text-3xl font-bold underline">
+				État d&lsquo;écriture
+			</h1>
 
 			<button
-				type="button" onClick={startTyping}
+				type="button"
+				onClick={startTyping}
 				className="bg-green-500 rounded-lg p-2"
 			>
-				Appuyez ici pour simuler l&apos;écriture
+				Appuyez ici pour simuler l&lsquo;écriture
 			</button>
 
 			<button
-				type="button" onClick={stopTyping}
+				type="button"
+				onClick={stopTyping}
 				className="bg-red-500 rounded-lg p-2"
 			>
 				Appuyez ici pour arrêter la simulation
@@ -123,31 +131,42 @@ export default function HomePage()
 
 			<h1 className="text-3xl font-bold underline">Envoi de messages</h1>
 
-			<textarea value={message} onChange={updateMessage} placeholder="Message" className="border-2 border-black" />
+			<textarea
+				value={message}
+				onChange={updateMessage}
+				placeholder="Message"
+				className="border-2 border-black"
+			/>
 
 			<button
-				type="button" onClick={sendMessage}
+				type="button"
+				onClick={sendMessage}
 				className="bg-blue-500 rounded-lg p-2"
 			>
 				Appuyez ici pour envoyer le message
 			</button>
 
 			<input
-				type="number" value={delay} onChange={updateDelay}
-				placeholder="Délai en secondes" className="border-2 border-black"
+				type="number"
+				value={delay}
+				onChange={updateDelay}
+				placeholder="Délai en secondes"
+				className="border-2 border-black"
 			/>
 
 			<h1 className="text-3xl font-bold underline">Activité en ligne</h1>
 
 			<button
-				type="button" onClick={startPresence}
+				type="button"
+				onClick={startPresence}
 				className="bg-green-500 rounded-lg p-2"
 			>
 				Appuyez ici pour simuler la présence
 			</button>
 
 			<button
-				type="button" onClick={stopPresence}
+				type="button"
+				onClick={stopPresence}
 				className="bg-red-500 rounded-lg p-2"
 			>
 				Appuyez ici pour arrêter la présence
@@ -168,10 +187,12 @@ export default function HomePage()
 			<h2 className="text-2xl font-bold underline">Sécurité</h2>
 
 			<input
-				type="password" value={password} onChange={updatePassword}
-				placeholder="Mot de passe" className="border-2 border-black"
+				type="password"
+				value={password}
+				onChange={updatePassword}
+				placeholder="Mot de passe"
+				className="border-2 border-black"
 			/>
-
 			Dernier code HTTP : {code}
 		</section>
 	);

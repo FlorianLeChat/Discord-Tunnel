@@ -8,15 +8,13 @@ import type { ReactNode } from "react";
 import "./page.css";
 import "@total-typescript/ts-reset";
 
-export default function RootLayout( { children }: { children: ReactNode; } )
+export default function RootLayout( { children }: { children: ReactNode } )
 {
 	// Affichage du rendu HTML de la page.
 	return (
 		<html lang="fr">
 			<body>
-				<main>
-					{children}
-				</main>
+				<main>{children}</main>
 			</body>
 		</html>
 	);
