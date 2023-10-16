@@ -1,3 +1,0 @@
-sentry:
-    # dsn: https://url.to.sentry.io/1234567890
-    tracesSampleRate: 0.1
