@@ -4,7 +4,6 @@ services:
     # https://github.com/FlorianLeChat/Discord-Tunnel
     java:
         image: discord-tunnel
-        restart: always
         healthcheck:
             test: ["CMD", "curl", "-f", "http://localhost:8080"]
             retries: 3
