@@ -21,8 +21,10 @@
   "devDependencies": {
     "@types/node": "~20.8",
     "@types/react": "~18.2",
+    "husky": "^8.0.0",
     "prettier": "~3.0",
     "typescript": "~5.2",
+    "lint-staged": "~12.0",
     "eslint-config-next": "~13.5",
     "eslint-config-airbnb": "~19.0",
     "@total-typescript/ts-reset": "~0.5",
@@ -37,9 +39,12 @@
   },
   "scripts": {
     "dev": "next dev",
-    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx --report-unused-disable-directives",
+    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "build": "next build && cd ../../.. && ./mvnw clean install -DskipTests",
-    "start": "java -jar ../../../target/discord-tunnel-1.0.0.jar"
+    "start": "java -jar ../../../target/discord-tunnel-1.0.0.jar",
+    "pretty": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
+    "prepare": "cd ../../.. && husky install src/main/ui/.husky",
+    "lint-staged": "lint-staged"
   },
   "browserslist": [
     "defaults"
