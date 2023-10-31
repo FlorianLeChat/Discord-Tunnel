@@ -217,7 +217,7 @@ public class DiscordGateway
 				String status = presenceData.getString("status");
 				String content = "{\"embeds\": [{\"title\": \"Alerte Discord Tunnel\", \"color\": 16711680, \"description\": \"Nouveau statut : « " + status + " »\"}]}";
 
-				URL url = new URL(DISCORD_WEBHOOK_URL);
+				URL url = new URI(DISCORD_WEBHOOK_URL).toURL();
 				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
 				connection.setRequestMethod("POST");

@@ -3,8 +3,10 @@ package com.florianlechat.discordtunnel.controllers;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import java.net.URI;
 import java.net.URL;
 import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
 
 import java.util.Base64;
 import java.security.SecureRandom;
@@ -54,7 +56,7 @@ public class DiscordController
 	//  taper un message.
 	//  Source : https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
 	@GetMapping(path = "/api/typing")
-	public ResponseEntity<String> SendTyping(HttpServletRequest request) throws IOException
+	public ResponseEntity<String> SendTyping(HttpServletRequest request) throws IOException, URISyntaxException
 	{
 		// On vérifie d'abord si le mot de passe est correct.
 		String password = request.getParameter("secret");
@@ -65,7 +67,7 @@ public class DiscordController
 		}
 
 		// On effectue ensuite la requête HTTP.
-		URL url = new URL("https://discord.com/api/v9/channels/1097906775291859027/typing");
+		URL url = new URI("https://discord.com/api/v9/channels/1097906775291859027/typing").toURL();
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
 		connection.setRequestMethod("POST");
@@ -103,7 +105,7 @@ public class DiscordController
 	//  dans un salon.
 	//  Source : https://discord.com/developers/docs/resources/channel#create-message
 	@GetMapping(path = "/api/message")
-	public ResponseEntity<String> SendMessage(HttpServletRequest request) throws IOException
+	public ResponseEntity<String> SendMessage(HttpServletRequest request) throws IOException, URISyntaxException
 	{
 		// On vérifie d'abord si le mot de passe est correct.
 		String password = request.getParameter("secret");
@@ -167,7 +169,7 @@ public class DiscordController
 		}
 
 		// On effectue après la requête HTTP.
-		URL url = new URL("https://discord.com/api/v9/channels/1097906775291859027/messages");
+		URL url = new URI("https://discord.com/api/v9/channels/1097906775291859027/messages").toURL();
 		String body = "{\"content\":\"" + message.trim() + "\",\"nonce\":\"" + generateNonce() + "\",\"tts\":false,\"flags\":0}";
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
