@@ -40,7 +40,7 @@
   "scripts": {
     "dev": "next dev",
     "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
-    "build": "next build && cd ../../.. && ./mvnw clean install -DskipTests",
+    "build": "next build",
     "start": "java -jar ../../../target/discord-tunnel-1.0.0.jar",
     "pretty": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
     "prepare": "cd ../../.. && husky install src/main/ui/.husky",
