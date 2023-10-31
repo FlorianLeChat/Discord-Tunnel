@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
-# Image Docker de Java 17.
-FROM eclipse-temurin:17-jdk-alpine
+# Image Docker de Java 21
+FROM eclipse-temurin:21-jdk-alpine
 
 # Création d'un utilisateur non-administrateur.
 RUN addgroup -S java && adduser -S java -G java
