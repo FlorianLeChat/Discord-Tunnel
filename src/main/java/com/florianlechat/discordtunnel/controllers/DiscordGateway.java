@@ -22,6 +22,7 @@ import jakarta.websocket.CloseReason;
 import jakarta.websocket.ClientEndpoint;
 import jakarta.websocket.WebSocketContainer;
 import jakarta.websocket.DeploymentException;
+import jakarta.websocket.CloseReason.CloseCode;
 
 @ClientEndpoint
 public class DiscordGateway
@@ -60,7 +61,7 @@ public class DiscordGateway
 		this.token = token;
 		this.status = status;
 
-		// On tente enfin de se connecter au WebSocket de Discord.
+		// On tente après de se connecter au WebSocket de Discord.
 		try
 		{
 			WebSocketContainer container = jakarta.websocket.ContainerProvider.getWebSocketContainer();
@@ -70,6 +71,31 @@ public class DiscordGateway
 			container.connectToServer(this, new URI(DISCORD_GATEWAY_URL));
 		}
 		catch (DeploymentException | URISyntaxException | IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		// On envoie enfin une notification sur Discord.
+		try
+		{
+			String content = "{\"embeds\": [{\"title\": \"État Discord Tunnel\", \"color\": 5763719, \"description\": \"Connexion au WebSocket.\"}]}";
+
+			URL url = new URI(DISCORD_WEBHOOK_URL).toURL();
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("content-type", "application/json");
+			connection.setDoOutput(true);
+
+			try (OutputStream os = connection.getOutputStream())
+			{
+				os.write(content.getBytes("UTF-8"));
+				os.close();
+			}
+
+			connection.getResponseCode();
+		}
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -134,10 +160,10 @@ public class DiscordGateway
 	@OnMessage
 	public void onWebSocketText(String message)
 	{
-		JSONObject messageJson = new JSONObject(message);
-
 		// On initialise d'abord la séquence de maintien de
 		//  connexion si le code d'opération est 10.
+		JSONObject messageJson = new JSONObject(message);
+
 		if (messageJson.getInt("op") == 10)
 		{
 			// On crée alors un nouveau thread pour envoyer les
@@ -214,7 +240,7 @@ public class DiscordGateway
 			{
 				// Envoi d'une notification sur Discord.
 				String status = presenceData.getString("status");
-				String content = "{\"embeds\": [{\"title\": \"Alerte Discord Tunnel\", \"color\": 16711680, \"description\": \"Nouveau statut : « " + status + " »\"}]}";
+				String content = "{\"embeds\": [{\"title\": \"Alerte Discord Tunnel\", \"color\": 3447003, \"description\": \"Nouveau statut : « " + status + " »\"}]}";
 
 				URL url = new URI(DISCORD_WEBHOOK_URL).toURL();
 				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -270,9 +296,36 @@ public class DiscordGateway
 	{
 		logMessage("Déconnexion du WebSocket de Discord : " + reason);
 
-		// On force la reconnexion si la fermeture du WebSocket est anormale.
+		// On envoie d'abord une notification sur Discord.
+		try
+		{
+			String content = "{\"embeds\": [{\"title\": \"État Discord Tunnel\", \"color\": 15548997, \"description\": \"Déconnexion du WebSocket.\"}]}";
+
+			URL url = new URI(DISCORD_WEBHOOK_URL).toURL();
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("content-type", "application/json");
+			connection.setDoOutput(true);
+
+			try (OutputStream os = connection.getOutputStream())
+			{
+				os.write(content.getBytes("UTF-8"));
+				os.close();
+			}
+
+			connection.getResponseCode();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		// On force enfin la reconnexion en fonction du code de fermeture.
 		//  Source : https://stackoverflow.com/a/19305172
-		if (reason.getCloseCode() == CloseReason.CloseCodes.CLOSED_ABNORMALLY)
+		CloseCode closeCode = reason.getCloseCode();
+
+		if (closeCode == CloseReason.CloseCodes.CLOSED_ABNORMALLY || closeCode == CloseReason.CloseCodes.GOING_AWAY)
 		{
 			logMessage("Reconnexion du WebSocket de Discord...");
 
