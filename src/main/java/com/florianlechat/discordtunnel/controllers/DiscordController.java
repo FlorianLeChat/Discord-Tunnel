@@ -1,5 +1,7 @@
 package com.florianlechat.discordtunnel.controllers;
 
+import com.florianlechat.discordtunnel.components.ServerProperties;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -16,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -26,6 +29,10 @@ public class DiscordController
 
 	// Nombre de caractères écrits par seconde (simulation par un humain).
 	final static Integer CHARACTERS_PER_SECOND = 5;
+
+	// Jetons d'authentification pour les différents utilisateurs.
+	@Autowired
+	private ServerProperties discordTokens;
 
 	// Génération d'un nombre aléatoire en Base64.
 	public static String generateNonce()
@@ -249,18 +256,7 @@ public class DiscordController
 				token = "0";
 			}
 
-			switch (Integer.parseInt(token))
-			{
-				// Jeton de Zélie.
-				case 0:
-					gateway.connect("MTA5NzkwNTA4ODAxOTg0NTI2MA.GJIDh4.-C6QaRjfJ0yigjAAuC1XCdM9ThmcESjhbOr358", status);
-					break;
-
-				// Jeton de Florian.
-				case 1:
-					gateway.connect("MTgzMjcyNDExMTY3MzI2MjA5.GlyjoW.x8xViIlpR3ILr4ibaoZbgkVs_clSfdQs-YMxaY", status);
-					break;
-			}
+			gateway.connect(discordTokens.getToken(Integer.parseInt(token)), status);
 		}
 		else
 		{
