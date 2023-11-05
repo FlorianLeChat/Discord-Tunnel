@@ -48,7 +48,7 @@ public class DiscordGateway
 	}
 
 	// Journalisation des messages en indiquant la date et l'heure.
-	private void logMessage(String message)
+	public static void logMessage(String message)
 	{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		dateFormat.setTimeZone(java.util.TimeZone.getTimeZone("Europe/Paris"));
