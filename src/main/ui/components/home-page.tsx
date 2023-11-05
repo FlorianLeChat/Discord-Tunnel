@@ -17,42 +17,42 @@ export default function HomePage()
 	const [ password, setPassword ] = useState( "" );
 	const [ typingTimer, setTypingTimer ] = useState<NodeJS.Timeout>();
 
-	// Permet de récupérer l'URL de l'application.
+	// Récupère l'URL de l'application.
 	const getUrl = () => ( process.env.NODE_ENV === "production"
 		? window.location.pathname
 		: "http://localhost:8080/" );
 
-	// Permet de mettre à jour le mot de passe.
+	// Mise à jour du mot de passe qui sera utilisé.
 	const updatePassword = ( event: ChangeEvent<HTMLInputElement> ) =>
 	{
 		setPassword( event.target.value );
 	};
 
-	// Permet de mettre à jour le message qui sera envoyé.
+	// Mise à jour du message qui sera envoyé.
 	const updateMessage = ( event: ChangeEvent<HTMLTextAreaElement> ) =>
 	{
 		setMessage( event.target.value );
 	};
 
-	// Permet de mettre à jour le token qui sera utilisé.
+	// Mise à jour du jeton d'authentification qui sera utilisé.
 	const updateToken = ( event: ChangeEvent<HTMLSelectElement> ) =>
 	{
 		setToken( event.target.value );
 	};
 
-	// Permet de mettre à jour le statut de présence qui sera utilisé.
+	// Mise à jour du statut de présence qui sera définit.
 	const updateStatus = ( event: ChangeEvent<HTMLSelectElement> ) =>
 	{
 		setStatus( event.target.value );
 	};
 
-	// Permet de mettre à jour le délai entre chaque envoi de message.
+	// Mise à jour du délai entre chaque envoi de message.
 	const updateDelay = ( event: ChangeEvent<HTMLInputElement> ) =>
 	{
 		setDelay( parseInt( event.target.value, 10 ) );
 	};
 
-	// Permet de démarrer la simulation d'écriture.
+	// Démarrage de la simulation d'écriture.
 	const startTyping = () =>
 	{
 		const typing = () =>
@@ -65,7 +65,7 @@ export default function HomePage()
 		setTypingTimer( setInterval( typing, 10000 ) );
 	};
 
-	// Permet d'arrêter la simulation d'écriture.
+	// Arrêt de la simulation d'écriture.
 	const stopTyping = () =>
 	{
 		if ( typingTimer )
@@ -74,7 +74,7 @@ export default function HomePage()
 		}
 	};
 
-	// Permet de démarrer la simulation de présence.
+	// Démarrage de la simulation de présence.
 	const startPresence = () =>
 	{
 		fetch(
@@ -82,7 +82,7 @@ export default function HomePage()
 		).then( ( response ) => setCode( response.status ) );
 	};
 
-	// Permet d'arrêter la simulation de présence.
+	// Arrêt de la simulation de présence.
 	const stopPresence = () =>
 	{
 		fetch( `${ getUrl() }api/heartbeat?secret=${ password }&state=0` ).then(
@@ -90,7 +90,7 @@ export default function HomePage()
 		);
 	};
 
-	// Permet d'envoyer un message au travers de l'API de Discord.
+	// Envoi d'un message à travers l'API de Discord.
 	const sendMessage = () =>
 	{
 		// Arrêt de la simulation d'écriture.
@@ -112,7 +112,6 @@ export default function HomePage()
 			<h1 className="text-3xl font-bold underline">
 				État d&lsquo;écriture
 			</h1>
-
 			<button
 				type="button"
 				onClick={startTyping}
@@ -120,7 +119,6 @@ export default function HomePage()
 			>
 				Appuyez ici pour simuler l&lsquo;écriture
 			</button>
-
 			<button
 				type="button"
 				onClick={stopTyping}
@@ -128,16 +126,13 @@ export default function HomePage()
 			>
 				Appuyez ici pour arrêter la simulation
 			</button>
-
 			<h1 className="text-3xl font-bold underline">Envoi de messages</h1>
-
 			<textarea
 				value={message}
 				onChange={updateMessage}
 				placeholder="Message"
 				className="border-2 border-black"
 			/>
-
 			<button
 				type="button"
 				onClick={sendMessage}
@@ -145,7 +140,6 @@ export default function HomePage()
 			>
 				Appuyez ici pour envoyer le message
 			</button>
-
 			<input
 				type="number"
 				value={delay}
@@ -153,9 +147,7 @@ export default function HomePage()
 				placeholder="Délai en secondes"
 				className="border-2 border-black"
 			/>
-
 			<h1 className="text-3xl font-bold underline">Activité en ligne</h1>
-
 			<button
 				type="button"
 				onClick={startPresence}
@@ -163,7 +155,6 @@ export default function HomePage()
 			>
 				Appuyez ici pour simuler la présence
 			</button>
-
 			<button
 				type="button"
 				onClick={stopPresence}
@@ -171,21 +162,17 @@ export default function HomePage()
 			>
 				Appuyez ici pour arrêter la présence
 			</button>
-
 			<select className="border-2 border-black" onChange={updateToken}>
 				<option value="0">Token 1</option>
 				<option value="1">Token 2</option>
 			</select>
-
 			<select className="border-2 border-black" onChange={updateStatus}>
 				<option value="online">En ligne</option>
 				<option value="idle">Inactif</option>
 				<option value="dnd">Ne pas déranger</option>
 				<option value="offline">Hors ligne</option>
 			</select>
-
 			<h2 className="text-2xl font-bold underline">Sécurité</h2>
-
 			<input
 				type="password"
 				value={password}

@@ -34,13 +34,13 @@ public class DiscordGateway
 	private static final String DISCORD_GATEWAY_URL = "wss://gateway.discord.gg/?v=10&encoding=json";
 	private static final String DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1139161244142682162/4DoYNP5NRGQvPWoVdnPX_N-dp1HJqbIG7i6gvTimykMxtnfX5uyZ94NkYcTx0mvUd3FJ";
 
-	// Permet de récupérer l'instance unique de la classe.
+	// Récupération de l'instance unique de la classe.
 	public synchronized static DiscordGateway getInstance()
 	{
 		return instance;
 	}
 
-	// Permet de journaliser les messages en indiquant la date et l'heure.
+	// Journalisation des messages en indiquant la date et l'heure.
 	private void logMessage(String message)
 	{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -49,14 +49,14 @@ public class DiscordGateway
 		System.out.println("[" + dateFormat.format(new Date()) + "] " + message);
 	}
 
-	// Permet de se connecter au WebSocket de Discord.
+	// Connexion au WebSocket de Discord.
 	//  Source : https://discord.com/developers/docs/topics/gateway#connections
 	public void connect(String token, String status)
 	{
-		// On ferme la connexion si elle est déjà ouverte.
+		// On ferme d'abord la connexion si elle est déjà ouverte.
 		close();
 
-		// On enregistre le jeton d'accès et le statut de l'utilisateur.
+		// On enregistre ensuite le jeton d'accès et le statut de l'utilisateur.
 		this.token = token;
 		this.status = status;
 
@@ -75,7 +75,7 @@ public class DiscordGateway
 		}
 	}
 
-	// Permet de déconnecter au WebSocket de Discord.
+	// Déconnexion du WebSocket de Discord.
 	public void close()
 	{
 		if (session != null && session.isOpen())
@@ -93,8 +93,7 @@ public class DiscordGateway
 		session = null;
 	}
 
-	// Permet de se connecter puis de s'authentifier avec un jeton
-	//  d'accès créé par un utilisateur.
+	// Connexion puis authentification avec un jeton d'accès créé par un utilisateur.
 	@OnOpen
 	public void onWebSocketConnect(Session session)
 	{
@@ -130,7 +129,7 @@ public class DiscordGateway
 		send(identifyJson.toString());
 	}
 
-	// Permet de recevoir les messages en provenance du WebSocket.
+	// Réception des messages en provenance du WebSocket.
 	//  Source : https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
 	@OnMessage
 	public void onWebSocketText(String message)
@@ -265,7 +264,7 @@ public class DiscordGateway
 		}
 	}
 
-	// Permet de recevoir les messages de déconnexion du WebSocket.
+	// Réception des messages de déconnexion du WebSocket.
 	@OnClose
 	public void onWebSocketClose(CloseReason reason)
 	{
@@ -281,14 +280,14 @@ public class DiscordGateway
 		}
 	}
 
-	// Permet de recevoir les messages d'erreur du WebSocket.
+	// Réception des messages d'erreur du WebSocket.
 	@OnError
 	public void onWebSocketError(Throwable cause)
 	{
 		System.err.println("Erreur du WebSocket de Discord : " + cause);
 	}
 
-	// Permet d'envoyer un message quelconque au WebSocket.
+	// Envoi d'un message quelconque au WebSocket.
 	private void send(String message)
 	{
 		try

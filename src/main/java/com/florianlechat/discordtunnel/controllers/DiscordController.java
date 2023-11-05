@@ -27,7 +27,7 @@ public class DiscordController
 	// Nombre de caractères écrits par seconde (simulation par un humain).
 	final static Integer CHARACTERS_PER_SECOND = 5;
 
-	// Permet de générer un nombre arbitraire en Base64.
+	// Génération d'un nombre aléatoire en Base64.
 	public static String generateNonce()
 	{
 		// On définit la longueur du nombre arbitraire
@@ -51,9 +51,8 @@ public class DiscordController
 		return nonce;
 	}
 
-	// Permet d'effectuer une requête HTTP vers l'API de Discord
-	//  afin de simuler le fait qu'un utilisateur est en train de
-	//  taper un message.
+	// Envoi une requête HTTP vers l'API de Discord afin de simuler
+	//  le fait qu'un utilisateur est en train de taper un message.
 	//  Source : https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
 	@GetMapping(path = "/api/typing")
 	public ResponseEntity<String> SendTyping(HttpServletRequest request) throws IOException, URISyntaxException
@@ -100,9 +99,8 @@ public class DiscordController
 		return ResponseEntity.status(connection.getResponseCode()).build();
 	}
 
-	// Permet d'effectuer une requête HTTP vers l'API de Discord
-	//  afin de simuler le fait qu'un utilisateur envoie un message
-	//  dans un salon.
+	// Envoi une requête HTTP vers l'API de Discord afin de simuler
+	//  le fait qu'un utilisateur envoie un message dans un salon.
 	//  Source : https://discord.com/developers/docs/resources/channel#create-message
 	@GetMapping(path = "/api/message")
 	public ResponseEntity<String> SendMessage(HttpServletRequest request) throws IOException, URISyntaxException
@@ -210,8 +208,8 @@ public class DiscordController
 		return ResponseEntity.status(connection.getResponseCode()).build();
 	}
 
-	// Permet d'effectuer une requête HTTP vers l'API de Discord
-	//  afin de simuler le fait qu'un utilisateur soit connecté.
+	// Envoi une requête HTTP vers l'API de Discord afin de simuler
+	//  le fait qu'un utilisateur soit connecté.
 	@GetMapping(path = "/api/heartbeat")
 	public ResponseEntity<String> SendHeartbeat(HttpServletRequest request) throws IOException
 	{

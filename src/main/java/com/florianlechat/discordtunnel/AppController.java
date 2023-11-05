@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AppController
 {
-	// Permet de servir le contenu statique du site.
+	// Ajout du contenu statique pour le site web.
 	@RequestMapping()
 	public String index() throws IOException
 	{
