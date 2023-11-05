@@ -14,6 +14,7 @@ export default function HomePage()
 	const [ token, setToken ] = useState( "0" );
 	const [ status, setStatus ] = useState( "online" );
 	const [ message, setMessage ] = useState( "" );
+	const [ activity, setActivity ] = useState( "" );
 	const [ password, setPassword ] = useState( "" );
 	const [ typingTimer, setTypingTimer ] = useState<NodeJS.Timeout>();
 
@@ -26,6 +27,12 @@ export default function HomePage()
 	const updatePassword = ( event: ChangeEvent<HTMLInputElement> ) =>
 	{
 		setPassword( event.target.value );
+	};
+
+	// Mise à jour de l'activity qui sera définit.
+	const updateActivity = ( event: ChangeEvent<HTMLInputElement> ) =>
+	{
+		setActivity( event.target.value );
 	};
 
 	// Mise à jour du message qui sera envoyé.
@@ -78,7 +85,7 @@ export default function HomePage()
 	const startPresence = () =>
 	{
 		fetch(
-			`${ getUrl() }api/heartbeat?secret=${ password }&token=${ token }&status=${ status }&state=1`
+			`${ getUrl() }api/heartbeat?secret=${ password }&token=${ token }&status=${ status }&activity=${ activity }&state=1`
 		).then( ( response ) => setCode( response.status ) );
 	};
 
@@ -112,6 +119,7 @@ export default function HomePage()
 			<h1 className="text-3xl font-bold underline">
 				État d&lsquo;écriture
 			</h1>
+
 			<button
 				type="button"
 				onClick={startTyping}
@@ -119,6 +127,7 @@ export default function HomePage()
 			>
 				Appuyez ici pour simuler l&lsquo;écriture
 			</button>
+
 			<button
 				type="button"
 				onClick={stopTyping}
@@ -126,13 +135,16 @@ export default function HomePage()
 			>
 				Appuyez ici pour arrêter la simulation
 			</button>
+
 			<h1 className="text-3xl font-bold underline">Envoi de messages</h1>
+
 			<textarea
 				value={message}
 				onChange={updateMessage}
-				placeholder="Message"
 				className="border-2 border-black"
+				placeholder="Message"
 			/>
+
 			<button
 				type="button"
 				onClick={sendMessage}
@@ -140,14 +152,17 @@ export default function HomePage()
 			>
 				Appuyez ici pour envoyer le message
 			</button>
+
 			<input
 				type="number"
 				value={delay}
 				onChange={updateDelay}
-				placeholder="Délai en secondes"
 				className="border-2 border-black"
+				placeholder="Délai en secondes"
 			/>
+
 			<h1 className="text-3xl font-bold underline">Activité en ligne</h1>
+
 			<button
 				type="button"
 				onClick={startPresence}
@@ -155,6 +170,7 @@ export default function HomePage()
 			>
 				Appuyez ici pour simuler la présence
 			</button>
+
 			<button
 				type="button"
 				onClick={stopPresence}
@@ -162,24 +178,37 @@ export default function HomePage()
 			>
 				Appuyez ici pour arrêter la présence
 			</button>
+
 			<select className="border-2 border-black" onChange={updateToken}>
 				<option value="0">Token 1</option>
 				<option value="1">Token 2</option>
 			</select>
+
 			<select className="border-2 border-black" onChange={updateStatus}>
 				<option value="online">En ligne</option>
 				<option value="idle">Inactif</option>
 				<option value="dnd">Ne pas déranger</option>
 				<option value="offline">Hors ligne</option>
 			</select>
+
+			<input
+				type="text"
+				value={activity}
+				onChange={updateActivity}
+				className="border-2 border-black"
+				placeholder="Salut tout le monde !"
+			/>
+
 			<h2 className="text-2xl font-bold underline">Sécurité</h2>
+
 			<input
 				type="password"
 				value={password}
 				onChange={updatePassword}
-				placeholder="Mot de passe"
 				className="border-2 border-black"
+				placeholder="Mot de passe"
 			/>
+
 			Dernier code HTTP : {code}
 		</section>
 	);

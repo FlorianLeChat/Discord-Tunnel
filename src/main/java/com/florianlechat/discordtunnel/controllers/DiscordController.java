@@ -256,7 +256,10 @@ public class DiscordController
 				token = "0";
 			}
 
-			gateway.connect(discordTokens.getToken(Integer.parseInt(token)), status);
+			// On récupère le message de l'activité s'il a été indiqué.
+			String activity = request.getParameter("activity");
+
+			gateway.connect(discordTokens.getToken(Integer.parseInt(token)), status, activity);
 		}
 		else
 		{

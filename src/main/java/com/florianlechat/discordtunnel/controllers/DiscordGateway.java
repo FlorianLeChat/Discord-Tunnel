@@ -9,7 +9,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.nio.channels.NotYetConnectedException;
 
@@ -29,6 +34,7 @@ public class DiscordGateway
 {
 	private String token;
 	private String status;
+	private String activity;
 	private Session session;
 	private Boolean receivedAck = true;
 	private static final DiscordGateway instance = new DiscordGateway();
@@ -52,7 +58,7 @@ public class DiscordGateway
 
 	// Connexion au WebSocket de Discord.
 	//  Source : https://discord.com/developers/docs/topics/gateway#connections
-	public void connect(String token, String status)
+	public void connect(String token, String status, String activity)
 	{
 		// On ferme d'abord la connexion si elle est déjà ouverte.
 		close();
@@ -60,6 +66,7 @@ public class DiscordGateway
 		// On enregistre ensuite le jeton d'accès et le statut de l'utilisateur.
 		this.token = token;
 		this.status = status;
+		this.activity = activity;
 
 		// On tente après de se connecter au WebSocket de Discord.
 		try
@@ -127,6 +134,12 @@ public class DiscordGateway
 
 		logMessage("Connexion au WebSocket de Discord réussie.");
 
+		Pattern pattern = Pattern.compile("[\\p{So}]");
+		Matcher matcher = pattern.matcher(this.activity);
+
+		String emoji = matcher.find() ? matcher.group() : null;
+		String message = emoji != null ? this.activity.replaceFirst(emoji, "") : this.activity;
+
 		JSONObject identifyJson = new JSONObject()
 			// Code de l'opération d'identification.
 			.put("op", 2)
@@ -142,6 +155,16 @@ public class DiscordGateway
 				.put("presence", new JSONObject()
 					.put("afk", false)
 					.put("status", this.status)
+					.put("activities", new JSONArray()
+						.put(new JSONObject()
+							.put("type", 4)
+							.put("name", "Custom Status")
+							.put("state", message)
+							.put("emoji", new JSONObject()
+								.put("name", emoji)
+							)
+						)
+					)
 				)
 
 				// Informations sur le client.
@@ -201,7 +224,7 @@ public class DiscordGateway
 						logMessage("Reconnexion du WebSocket de Discord...");
 
 						close();
-						connect(token, status);
+						connect(token, status, activity);
 
 						return;
 					}
@@ -280,7 +303,7 @@ public class DiscordGateway
 			logMessage("Le WebSocket de Discord a demandé une reconnexion.");
 
 			close();
-			connect(token, status);
+			connect(token, status, activity);
 		}
 		// On réceptionne enfin les messages d'acquittement
 		//  du message de maintien de connexion.
@@ -329,7 +352,7 @@ public class DiscordGateway
 		{
 			logMessage("Reconnexion du WebSocket de Discord...");
 
-			connect(token, status);
+			connect(token, status, activity);
 		}
 	}
 
