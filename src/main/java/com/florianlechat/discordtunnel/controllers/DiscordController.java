@@ -30,9 +30,9 @@ public class DiscordController
 	// Nombre de caractères écrits par seconde (simulation par un humain).
 	final static Integer CHARACTERS_PER_SECOND = 5;
 
-	// Jetons d'authentification pour les différents utilisateurs.
+	// Propriétés générales du programme.
 	@Autowired
-	private ServerProperties discordTokens;
+	private ServerProperties properties;
 
 	// Génération d'un nombre aléatoire en Base64.
 	public static String generateNonce()
@@ -67,7 +67,7 @@ public class DiscordController
 		// On vérifie d'abord si le mot de passe est correct.
 		String password = request.getParameter("secret");
 
-		if (password == null || password.isEmpty() || !password.equals("laurine"))
+		if (password == null || password.isEmpty() || !password.equals(properties.getPassword()))
 		{
 			return ResponseEntity.status(401).build();
 		}
@@ -115,7 +115,7 @@ public class DiscordController
 		// On vérifie d'abord si le mot de passe est correct.
 		String password = request.getParameter("secret");
 
-		if (password == null || password.isEmpty() || !password.equals("laurine"))
+		if (password == null || password.isEmpty() || !password.equals(properties.getPassword()))
 		{
 			return ResponseEntity.status(401).build();
 		}
@@ -223,7 +223,7 @@ public class DiscordController
 		// On vérifie d'abord si le mot de passe est correct.
 		String password = request.getParameter("secret");
 
-		if (password == null || password.isEmpty() || !password.equals("laurine"))
+		if (password == null || password.isEmpty() || !password.equals(properties.getPassword()))
 		{
 			return ResponseEntity.status(401).build();
 		}
@@ -259,7 +259,7 @@ public class DiscordController
 			// On récupère le message de l'activité s'il a été indiqué.
 			String activity = request.getParameter("activity");
 
-			gateway.connect(discordTokens.getToken(Integer.parseInt(token)), status, activity);
+			gateway.connect(properties.getToken(Integer.parseInt(token)), status, activity);
 		}
 		else
 		{

@@ -7,11 +7,25 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Component
-@Configuration("discordTokens")
+@Configuration("properties")
 @ConfigurationProperties(prefix = "tunnel")
 public class ServerProperties
 {
-    private Map<String, String> tokens;
+	private String password;
+	private Map<String, String> tokens;
+
+	// Définition/récupère du mot de passe d'accès.
+	public String setPassword(String password)
+	{
+		this.password = password;
+
+		return this.password;
+	}
+
+	public String getPassword()
+	{
+		return this.password;
+	}
 
 	// Définition/récupération d'un seul jeton.
 	public String setToken(String token)
