@@ -1,7 +1,10 @@
 package com.florianlechat.discordtunnel;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URL;
+import java.io.FileReader;
+import java.io.BufferedReader;
 import java.net.HttpURLConnection;
 import static com.florianlechat.discordtunnel.controllers.DiscordGateway.logMessage;
 
@@ -26,12 +29,24 @@ public class Application
 	{
 		return (args) ->
 		{
-			logMessage("Connexion automatique au WebSocket...");
+			// On tente d'abord le fichier contenant la requête.
+			File file = new File("src/main/resources/request.txt");
 
-			URL url = new URI("http://localhost:8080/api/heartbeat?secret=laurine&token=1&status=idle&activity=%F0%9F%98%AA%20Gar%C3%A7on%20stupide..&state=1").toURL();
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			if (file.exists())
+			{
+				// Si le fichier existe, on lit ensuite seulement la première ligne.
+				BufferedReader reader = new BufferedReader(new FileReader(file));
+				String line = reader.readLine();
+				reader.close();
 
-			connection.getResponseCode();
+				// On effectue enfin la connexion au WebSocket.
+				logMessage("Connexion automatique au WebSocket...");
+
+				URL url = new URI(line).toURL();
+				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+				connection.getResponseCode();
+    	    }
 		};
 	}
 }
