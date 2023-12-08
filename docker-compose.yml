@@ -1,3 +1,5 @@
+name: discord-tunnel
+
 version: "3.8"
 
 services:
