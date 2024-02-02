@@ -41,7 +41,7 @@
     "build": "next build",
     "start": "java -jar ../../../target/discord-tunnel-1.0.0.jar",
     "pretty": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
-    "prepare": "cd ../../.. && husky install src/main/ui/.husky",
+    "prepare": "cd ../../.. && husky src/main/ui/.husky",
     "lint-staged": "lint-staged"
   },
   "browserslist": [
